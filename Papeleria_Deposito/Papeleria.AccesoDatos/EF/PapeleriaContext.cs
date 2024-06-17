@@ -16,13 +16,16 @@ namespace Papeleria.AccesoDatos.EF
         public DbSet<Usuario> Usuarios{ get; set; }
         public DbSet<Articulo> Articulos { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(@"SERVER=(localDB)\Mssqllocaldb;DATABASE=PapeleriaOBL;INTEGRATED SECURITY=True; encrypt=false");
-        }
+        public PapeleriaContext(DbContextOptions options) : base(options) { }
 
+      /*  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"SERVER=(localDB)\Mssqllocaldb;DATABASE=PapeleriaOBLv2;INTEGRATED SECURITY=True; encrypt=false");
+        }
+*/
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); 
         }
     }
 }
