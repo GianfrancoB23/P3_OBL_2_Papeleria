@@ -1,7 +1,6 @@
 using Papeleria.LogicaNegocio.Excepciones.Usuario.UsuarioExcepcions.Nombre;
 using Papeleria.LogicaNegocio.InterfacesEntidades;
 using System.Text.RegularExpressions;
-using Papeleria.Comun;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Papeleria.LogicaNegocio.Entidades.ValueObjects.Usuario

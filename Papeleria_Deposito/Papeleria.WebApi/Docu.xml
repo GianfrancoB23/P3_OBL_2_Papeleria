@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Papeleria.WebApi</name>
+    </assembly>
+    <members>
+        <member name="M:Papeleria.WebApi.Controllers.ArticulosController.Get">
+            <summary>
+            Listar todos los articulos
+            </summary>
+            <returns>Lista de articulos ordenados alfabeticamente.</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.ArticulosController.Get(System.Int32)">
+            <summary>
+            Listar articulo particuloar
+            </summary>
+            <param name="id">Número entero con el valor Id del articulo a buscar</param>
+            <returns>Articulo correspondiente al ID - Code 200 | Error 400 (Bad Request) si parametro/articulo es invalido |  500 - Error con la DB / Excepcion particular</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.ArticulosController.Post(Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Articulos.ArticuloDTO)">
+            <summary>
+            Agregar articulo
+            </summary>
+            <param name="articulo">Parametro que toma el articulo armado con sus respectivos atributos y lo pasa a la aplicacion para registrarlo</param>
+            <returns>201 - Si el Articulo fue creado satisfactoriamente | 400 - Si el Articulo suministrado no es valido | 500 - Error con la DB / Excepcion particular</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.ArticulosController.Put(System.Int32,Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Articulos.ArticuloDTO)">
+            <summary>
+            Modificar articulo
+            </summary>
+            <param name="id">Proporciona el ID del objeto a modificar</param>
+            <param name="articulo">Proporciona el cuerpo del articulo que va a reemplazar al existente</param>
+            <returns>200 - Articulo modificado correctamente | 400 - ID/Articulo nuevo invalido | 500 - Error en la DB / Excepcion particular</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.ArticulosController.Delete(System.Int32)">
+            <summary>
+            Borrar articulo
+            </summary>
+            <param name="id">Proporciona el ID del articulo a borrar</param>
+            <returns>200 - Articulo borrado correctamente | 400 - ID Invalido o Articulo no valido | 500 - Error de la DB / Excepcion particular</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.PedidosController.Get">
+            <summary>
+            Listar pedidos anulados
+            </summary>
+            <returns>200 - Retorna la lista con los pedidos anulados en orden descendente por Fecha | Status correspondiente al error</returns>
+        </member>
+        <member name="T:ImprimirCodigoFuente.ImpresionCodigoFuenteSolucion">
+            <summary>
+            Para utilizar este código:
+            1. Agregar un proyecto aplicación de consola en la solución que tiene el código fuente a imprimir
+            2. Sustituir el código de la clase Program por este código 
+            3. Configurar el proyecto de consola como proyecto de inicio
+            4. Ejecutar la aplicación
+            5. En la misma carpeta de la clase Program quedarán los archivos de texto con el código fuente
+            </summary>
+        </member>
+        <member name="M:ImprimirCodigoFuente.ImpresionCodigoFuenteSolucion.Main(System.String[])">
+            <summary>
+            Imprime los archivos de código con extensión .cs y las views .cshtml.
+            Para agregar otro tipo de archivo simplemente invocar al método Imprimir
+            indicando *.extensión
+            </summary>
+            <param name="args"></param>
+        </member>
+        <member name="M:ImprimirCodigoFuente.ImpresionCodigoFuenteSolucion.Imprimir(System.String,System.String)">
+            <summary>
+            Imprime los archivos de código fuente de la solución
+            </summary>
+            <param name="tipoArchivo">El nombre del archivo a imprimir.Para imprimir todos los de un tipo determinado usar "*.extensión" por ejemplo:  "*.cs"</param>
+            <param name="nombreArchivoSalida">El nombre del archivo de texto donde quedarà el código fuente</param>
+            <remarks>
+            Este código funciona siempre que el archivo de la solución (.sln) esté en la raíz de la solución,
+            es decir cuando todos los proyectos estàn en subcarpetas de la carpeta de la solución
+            </remarks>
+        </member>
+    </members>
+</doc>

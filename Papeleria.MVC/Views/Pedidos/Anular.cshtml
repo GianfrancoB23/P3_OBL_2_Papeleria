@@ -1,0 +1,50 @@
+﻿@model Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Pedidos.PedidoDTO
+
+@{
+    ViewData["Title"] = "Detalle del pedido";
+}
+<p>
+    <a asp-action="Index">Volver a la lista</a>
+</p>
+
+<div class="div">
+    <h4>Pedido</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaPedido)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaPedido)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaEntrega)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaEntrega)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ClienteID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ClienteID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.precioFinal)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.precioFinal)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.entregado)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.entregado)
+        </dd>
+
+        <form asp-action="Anular">
+            <input type="submit" value="Anular" class="btn btn-danger" /> |
+            @Html.CheckBox("IsChecked") <span>Entiendo que esta operación es riesgosa</span>
+            <a asp-action="Index">Volver a la lista</a>
+        </form>
+</div>

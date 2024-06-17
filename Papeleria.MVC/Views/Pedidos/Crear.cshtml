@@ -1,0 +1,98 @@
+﻿@using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Pedidos
+@model Papeleria.MVC.Models.PedidosModels.PedidoAltaModel
+
+<h1>Crear Pedido</h1>
+<p>@ViewBag.Error</p>
+
+<form asp-action="Crear" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="form-group">
+        <label asp-for="ClienteId">Cliente:</label>
+        <select asp-for="ClienteId" class="form-control" asp-items="@(new SelectList(ViewBag.Clientes, "Id", "razonSocial"))">
+            <option value="">Seleccionar cliente...</option>
+        </select>
+        <span asp-validation-for="ClienteId" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="FechaEntrega">Fecha de Entrega:</label>
+        <input asp-for="FechaEntrega" class="form-control" type="date" />
+        <span asp-validation-for="FechaEntrega" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="iva">Valor IVA:</label>
+        <input asp-for="iva" class="form-control" type="number" value="22" />
+        <span asp-validation-for="iva" class="text-danger"></span>
+    </div>
+    @if (ViewBag.LineasPedido != null && ViewBag.LineasPedido.Count > 0)
+    {
+        <div class="form-group">
+            <label>Articulos pedidos:</label>
+            <table class="table table-bordered" id="lineasPedidoAgregados">
+                <thead>
+                    <tr>
+                        <th>Articulo</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                @foreach (LineaPedidoDTO linea in ViewBag.LineasPedido)
+                {
+                    <tr>
+                        <td>
+                            @linea.NombreArticulo
+
+                        </td>
+                        <td>
+                            Cantidad: @linea.Cantidad
+
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    }
+    <button type="submit" class="btn btn-success">Crear Pedido</button>
+</form>
+
+<div class="form-group">
+    <form asp-action="AddArticulo">
+
+        <label>Artículos:</label>
+        <table class="table table-bordered" id="lineasPedido">
+            <thead>
+                <tr>
+                    <th>Artículo</th>
+                    <th>Cantidad</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var linea in Model.LineasPedido)
+                {
+                    <tr>
+                        <td>
+                            <select asp-for="ArticuloId" class="form-control" asp-items="@(new SelectList(ViewBag.Articulos, "Id", "NombreArticulo"))">
+                                <option value="">Seleccionar artículo...</option>
+                            </select>
+                            <span asp-validation-for="ArticuloId" class="text-danger"></span>
+
+                        </td>
+                        <td><input asp-for="Cantidad" class="form-control" /></td>
+                        <span asp-validation-for="Cantidad" class="text-danger"></span>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary" id="agregarLinea">Agregar Línea de Pedido</button>
+    </form>
+</div>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
