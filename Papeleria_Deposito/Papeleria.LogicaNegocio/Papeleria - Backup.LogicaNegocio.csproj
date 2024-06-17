@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+<<<<<<< HEAD
+    <Folder Include="Excepciones\EncargadoDeposito\" />
+=======
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+>>>>>>> 0fe4b8aae6075df0a5703a079da198b74e1880d2
+  </ItemGroup>
+
+</Project>
