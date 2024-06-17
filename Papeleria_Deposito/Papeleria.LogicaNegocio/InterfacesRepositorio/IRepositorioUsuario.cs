@@ -1,6 +1,5 @@
 ﻿using Empresa.LogicaDeNegocio.Entidades;
 using Empresa.LogicaDeNegocio.Sistema;
-using Papeleria.LogicaNegocio.Entidades.ValueObjects.Clientes;
 using Papeleria.LogicaNegocio.Entidades.ValueObjects.Usuario;
 using System;
 using System.Collections.Generic;

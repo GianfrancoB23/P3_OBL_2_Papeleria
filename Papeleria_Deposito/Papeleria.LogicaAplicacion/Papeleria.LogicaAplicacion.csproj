@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Papeleria.LogicaNegocio\Papeleria.LogicaNegocio.csproj" />
+	  <ProjectReference Include="..\Papeleria.AccesoDatos\Papeleria.AccesoDatos.csproj" />
   </ItemGroup>
 
 </Project>

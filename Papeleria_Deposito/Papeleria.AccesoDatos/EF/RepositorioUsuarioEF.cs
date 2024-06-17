@@ -1,7 +1,6 @@
 ﻿using Empresa.LogicaDeNegocio.Entidades;
 using Empresa.LogicaDeNegocio.Sistema;
 using Microsoft.EntityFrameworkCore;
-using Papeleria.LogicaNegocio.Entidades.ValueObjects.Clientes;
 using Papeleria.LogicaNegocio.Entidades.ValueObjects.Usuario;
 using Papeleria.LogicaNegocio.Excepciones.Usuario;
 using Papeleria.LogicaNegocio.Excepciones.Usuario.UsuarioExcepcions.Constrasenia;
@@ -29,7 +28,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public void ModificarContrasenia(int id, ContraseniaUsuario contraseniaNueva)
         {
-            var usuario = _db.Usuarios.FirstOrDefault(u => u.Id == id);
+            var usuario = _db.Usuarios.FirstOrDefault(u => u.ID == id);
 
             if (usuario != null)
             {
@@ -51,7 +50,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public Usuario GetById(int id)
         {
-            Usuario? usuario = _db.Usuarios.FirstOrDefault(usr => usr.Id == id);
+            Usuario? usuario = _db.Usuarios.FirstOrDefault(usr => usr.ID == id);
             return usuario;
         }
 
@@ -71,7 +70,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public void Update(int id, Usuario obj)
         {
-            var usuario = _db.Usuarios.FirstOrDefault(u => u.Id == id);
+            var usuario = _db.Usuarios.FirstOrDefault(u => u.ID == id);
 
             if (usuario != null)
             {
@@ -94,7 +93,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public void Remove(int id)
         {
-            var usuario = _db.Usuarios.FirstOrDefault(u => u.Id == id);
+            var usuario = _db.Usuarios.FirstOrDefault(u => u.ID == id);
             if (usuario != null)
             {
                 _db.Usuarios.Remove(usuario);

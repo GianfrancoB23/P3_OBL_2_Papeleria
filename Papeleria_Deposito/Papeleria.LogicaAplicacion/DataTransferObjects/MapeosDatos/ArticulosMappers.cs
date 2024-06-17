@@ -23,7 +23,7 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
         {
             if (dto == null) throw new ArticuloNuloException(nameof(dto));
             var articulo = new Articulo(dto.CodigoProveedor, dto.NombreArticulo, dto.Descripcion, dto.PrecioVP, dto.Stock);
-            articulo.Id = dto.Id;
+            articulo.ID = dto.Id;
             return articulo;
         }
         public static ArticuloDTO ToDto(Articulo articulo)
@@ -31,7 +31,7 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
             if (articulo == null) throw new ArticuloNuloException();
             return new ArticuloDTO()
             {
-                Id = articulo.Id,
+                Id = articulo.ID,
                 CodigoProveedor = articulo.CodigoProveedor.codigo,
                 NombreArticulo = articulo.NombreArticulo.Nombre,
                 Descripcion = articulo.Descripcion.Descripcion,

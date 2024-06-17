@@ -13,8 +13,8 @@ namespace Papeleria.LogicaNegocio.Entidades.ValueObjects.Usuario
 
         public NombreCompleto(string nombre, string apellido)
         {
-            Nombre = UtilidadesString.FormatearInicialesMayuscula(nombre);
-            Apellido = UtilidadesString.FormatearInicialesMayuscula(apellido);
+            Nombre = FormatearInicialesMayuscula(nombre);
+            Apellido = FormatearInicialesMayuscula(apellido);
             esValido();
         }
         //public void esValido(string nombre, string apellido) {
@@ -39,6 +39,18 @@ namespace Papeleria.LogicaNegocio.Entidades.ValueObjects.Usuario
         //        throw new NombreNoValidoException($"{apellido}: no es un apellido valido.");
         //    }
         //}
+        public static string FormatearInicialesMayuscula(string texto)
+        {
+            string[] palabras = texto.Split(' ');
+            for (int i = 0; i < palabras.Length; i++)
+            {
+                if (palabras[i].Length > 0)
+                {
+                    palabras[i] = char.ToUpper(palabras[i][0]) + palabras[i].Substring(1);
+                }
+            }
+            return string.Join(" ", palabras);
+        }
         public void esValido()
         {
             if (Nombre == null || Apellido == null) {
