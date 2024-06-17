@@ -53,5 +53,14 @@ namespace Papeleria.LogicaNegocio.Entidades
             }
         }
 
+        public void ModificarDatos(MovimientoStock obj)
+        {
+            FecHorMovRealizado = obj.FecHorMovRealizado;
+            Articulo = obj.Articulo;
+            Movimiento = obj.Movimiento;
+            UsuarioRealizaMovimiento = obj.UsuarioRealizaMovimiento;
+            CtdUnidadesXMovimiento = obj.CtdUnidadesXMovimiento;
+        }
+
     }
 }

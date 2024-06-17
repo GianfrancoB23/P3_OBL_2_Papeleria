@@ -3,6 +3,7 @@ using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Usuarios;
 using Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos;
 using Papeleria.LogicaAplicacion.Interaces;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios;
+using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.Excepciones.Usuario;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 using System;
@@ -34,6 +35,11 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Usuarios
         public Usuario GetById(int id)
         {
             return _repoUsuarios.GetById(id);
+        }
+
+        public EncargadoDeposito GetEncargadoByID(int id)
+        {
+            throw new NotImplementedException();
         }
     }
         

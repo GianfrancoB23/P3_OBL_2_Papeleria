@@ -15,6 +15,9 @@ namespace Papeleria.AccesoDatos.EF
     {
         public DbSet<Usuario> Usuarios{ get; set; }
         public DbSet<Articulo> Articulos { get; set; }
+        public DbSet<EncargadoDeposito> EncargadosDepositos { get; set; }
+        public DbSet<TipoMovimiento> TiposMovimientos { get; set; }
+        public DbSet<MovimientoStock> MovimientoStocks { get; set; }
 
         public PapeleriaContext(DbContextOptions options) : base(options) { }
 

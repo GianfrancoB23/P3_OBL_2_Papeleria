@@ -1,5 +1,6 @@
 ﻿using Empresa.LogicaDeNegocio.Entidades;
 using Empresa.LogicaDeNegocio.Sistema;
+using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.Entidades.ValueObjects.Usuario;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace Papeleria.LogicaNegocio.InterfacesRepositorio
         public void ModificarContrasenia(int id, ContraseniaUsuario contraseniaNueva);
         public Usuario Login(string email, string contrasenia);
         bool ExisteUsuarioConEmail(string email);
+        public EncargadoDeposito GetEncargadoByID(int id);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Empresa.LogicaDeNegocio.Sistema;
 using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Usuarios;
+using Papeleria.LogicaNegocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,5 +13,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios
     {
         UsuarioDTO GetByIdDTO(int id);
         Usuario GetById(int id);
+        EncargadoDeposito GetEncargadoByID(int id);
     }
 }

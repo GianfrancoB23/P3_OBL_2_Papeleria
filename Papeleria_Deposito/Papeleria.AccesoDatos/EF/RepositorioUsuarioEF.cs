@@ -1,7 +1,9 @@
 ﻿using Empresa.LogicaDeNegocio.Entidades;
 using Empresa.LogicaDeNegocio.Sistema;
 using Microsoft.EntityFrameworkCore;
+using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.Entidades.ValueObjects.Usuario;
+using Papeleria.LogicaNegocio.Excepciones.EncargadoDeposito;
 using Papeleria.LogicaNegocio.Excepciones.Usuario;
 using Papeleria.LogicaNegocio.Excepciones.Usuario.UsuarioExcepcions.Constrasenia;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
@@ -47,6 +49,10 @@ namespace Papeleria.AccesoDatos.EF
 
         public Usuario GetById(int id)
         {
+            if (id == null)
+            { 
+                throw new UsuarioNuloExcepcion("La ID a buscar no puede ser nula.");
+            }
             Usuario? usuario = _db.Usuarios.FirstOrDefault(usr => usr.ID == id);
             return usuario;
         }
@@ -139,6 +145,16 @@ namespace Papeleria.AccesoDatos.EF
         {
             Usuario usuario = GetUsuarioPorEmail(email);
             return usuario != null;
+        }
+
+        public EncargadoDeposito GetEncargadoByID(int id)
+        {
+            if (id == null)
+            {
+                throw new EncargadoNoValidoException("La ID a buscar no puede ser nula.");
+            }
+            EncargadoDeposito? usuario = (EncargadoDeposito?)_db.Usuarios.FirstOrDefault(usr => usr.ID == id);
+            return usuario;
         }
     }
 }

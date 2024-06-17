@@ -12,9 +12,9 @@ namespace Papeleria.LogicaNegocio.Entidades
     public class TipoMovimiento : IEntity, IValidable<TipoMovimiento>, IEquatable<TipoMovimiento>
     {
         public int ID { get; set; }
-        public String Nombre { get; set; }
+        public string Nombre { get; set; }
 
-        public TipoMovimiento(int iD, string nombre)
+        public TipoMovimiento(string nombre)
         {
             Nombre = nombre;
             esValido();
