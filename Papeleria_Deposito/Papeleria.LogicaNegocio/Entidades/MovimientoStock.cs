@@ -37,7 +37,19 @@ namespace Papeleria.LogicaNegocio.Entidades
         {
             if (Articulo == null)
             { 
-                throw new MovimientoStockNoValidoException("");
+                throw new MovimientoStockNuloException("Articulo no puede ser nulo");
+            }
+            if (Movimiento == null)
+            {
+                throw new MovimientoStockNuloException("Movimiento no puede ser nulo");
+            }
+            if (UsuarioRealizaMovimiento == null)
+            {
+                throw new MovimientoStockNuloException("Usuario no puede ser nulo");
+            }
+            if (CtdUnidadesXMovimiento == null)
+            {
+                throw new MovimientoStockNuloException("Cantidad de unidades a mover no puede ser nulo");
             }
         }
 

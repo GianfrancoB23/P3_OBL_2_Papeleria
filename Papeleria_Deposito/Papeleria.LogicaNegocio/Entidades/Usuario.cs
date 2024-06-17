@@ -8,9 +8,9 @@ using Papeleria.LogicaNegocio.InterfacesEntidades;
 
 namespace Empresa.LogicaDeNegocio.Sistema
 {
-    public class Usuario : IValidable<Usuario>, IEquatable<Usuario>, IEntity
+    public abstract class Usuario : IValidable<Usuario>, IEquatable<Usuario>, IEntity
 	{
-        public int Id { get; set; }
+        public int ID { get; set; }
         public EmailUsuario Email{ get; set; }
 
 		public NombreCompleto NombreCompleto{ get; set; }
@@ -30,9 +30,9 @@ namespace Empresa.LogicaDeNegocio.Sistema
         public bool Equals(Usuario? other)
         {
             if (other == null)
-                throw new ArgumentNullException("Debe incluir el autor a comparar");
+                throw new UsuarioNoValidoExcepcion("Debe incluir el autor a comparar");
 
-            return this.Id == other.Id || this.Email == other.Email;
+            return this.ID == other.ID || this.Email == other.Email;
         }
 
         public void esValido()
@@ -52,14 +52,14 @@ namespace Empresa.LogicaDeNegocio.Sistema
                 throw new UsuarioNoValidoExcepcion("La contraseña no puede ser nula para crear el usuario.");
             }
         }
-        public void ModificarContraseña(string contrasenia)
+        public virtual void ModificarContraseña(string contrasenia)
         {
             if (contrasenia == null)
                 throw new ContraseniaNuloException("La contraseña no puede ser nula.");
             this.Contrasenia = new ContraseniaUsuario(contrasenia);
         }
 
-        public void ModificarDatos(Usuario usu) {
+        public virtual void ModificarDatos(Usuario usu) {
             if (usu.Contrasenia == null)
                 throw new ContraseniaNuloException("La contraseña no puede ser nula.");
             if (usu.NombreCompleto == null)
