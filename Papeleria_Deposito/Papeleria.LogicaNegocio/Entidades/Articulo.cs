@@ -1,5 +1,4 @@
 using Papeleria.LogicaNegocio.Entidades.ValueObjects.Articulos;
-using Papeleria.LogicaNegocio.Entidades.ValueObjects.Pedidos;
 using Papeleria.LogicaNegocio.Excepciones.Articulo;
 using Papeleria.LogicaNegocio.Excepciones.Articulo.ArticulosValueObjects.CodigoProveedor;
 using Papeleria.LogicaNegocio.Excepciones.Articulo.ArticulosValueObjects.DescripcionArticulo;
@@ -12,7 +11,7 @@ namespace Empresa.LogicaDeNegocio.Entidades
 {
     public class Articulo : IValidable<Articulo>, IEquatable<Articulo>, IEntity
 	{
-        public int Id { get; set; }
+        public int ID { get; set; }
 		public NombreArticulo NombreArticulo{ get; set; }
         public CodigoProveedorArticulos CodigoProveedor{ get; set; }
 		public DescripcionArticulo Descripcion{ get; set; }

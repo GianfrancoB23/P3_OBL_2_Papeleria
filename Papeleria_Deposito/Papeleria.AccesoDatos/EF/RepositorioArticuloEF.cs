@@ -48,7 +48,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public Articulo GetById(int id)
         {
-            Articulo? articulo = _db.Articulos.FirstOrDefault(art => art.Id == id);
+            Articulo? articulo = _db.Articulos.FirstOrDefault(art => art.ID == id);
             return articulo;
         }
 
@@ -59,7 +59,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public void Remove(int id)
         {
-            var articulo = _db.Articulos.FirstOrDefault(u => u.Id == id);
+            var articulo = _db.Articulos.FirstOrDefault(u => u.ID == id);
             if (articulo != null)
             {
                 _db.Articulos.Remove(articulo);
@@ -75,7 +75,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public void Update(int id, Articulo obj)
         {
-            var articulo = _db.Articulos.FirstOrDefault(u => u.Id == id);
+            var articulo = _db.Articulos.FirstOrDefault(u => u.ID == id);
 
             if (articulo != null)
             {

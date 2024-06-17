@@ -22,14 +22,14 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
         {
             if (dto == null) throw new UsuarioNuloExcepcion(nameof(dto));
             var usuario = new Usuario(dto.Email, dto.Nombre, dto.Apellido, dto.Contrasenia);
-            usuario.Id = dto.Id;
+            usuario.ID = dto.Id;
             return usuario;
         }
         public static UsuarioDTO ToDto(Usuario usuario) {
             if (usuario == null) throw new UsuarioNuloExcepcion();
             return new UsuarioDTO()
             {
-                Id = usuario.Id,
+                Id = usuario.ID,
                 Email = usuario.Email.Direccion,
                 Nombre = usuario.NombreCompleto.Nombre,
                 Apellido = usuario.NombreCompleto.Apellido,
