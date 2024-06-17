@@ -20,12 +20,16 @@ namespace Papeleria.AccesoDatos.EF
         public DbSet<MovimientoStock> MovimientoStocks { get; set; }
 
         public PapeleriaContext(DbContextOptions options) : base(options) { }
-
-      /*  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public PapeleriaContext():base()
         {
-            optionsBuilder.UseSqlServer(@"SERVER=(localDB)\Mssqllocaldb;DATABASE=PapeleriaOBLv2;INTEGRATED SECURITY=True; encrypt=false");
+            
         }
-*/
+
+        /*  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+          {
+              optionsBuilder.UseSqlServer(@"SERVER=(localDB)\Mssqllocaldb;DATABASE=PapeleriaOBLv2;INTEGRATED SECURITY=True; encrypt=false");
+          }
+  */
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); 
