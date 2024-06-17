@@ -8,27 +8,19 @@ using System.Threading.Tasks;
 
 namespace Papeleria.LogicaNegocio.Entidades
 {
-    public class EncargadoDeposito : Usuario
+    public class Administrador : Usuario
     {
-        public EncargadoDeposito()
+        public Administrador()
         {
         }
 
-        public EncargadoDeposito(string email, string nombre, string apellido, string contrasenia) : base(email, nombre, apellido, contrasenia)
+        public Administrador(string email, string nombre, string apellido, string contrasenia) : base(email, nombre, apellido, contrasenia)
         {
             this.Email = new EmailUsuario(email);
             this.NombreCompleto = new NombreCompleto(nombre, apellido);
             this.Contrasenia = new ContraseniaUsuario(contrasenia);
             esValido();
         }
-        public override void ModificarContraseña(string contrasenia)
-        {
-            base.ModificarContraseña(contrasenia);
-        }
-        public override void ModificarDatos(EncargadoDeposito usu)
-        {
-            base.ModificarDatos(usu);
-        } 
-        
+
     }
 }

@@ -1,6 +1,7 @@
 
 
 using Empresa.LogicaDeNegocio.Entidades;
+using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.Entidades.ValueObjects.Usuario;
 using Papeleria.LogicaNegocio.Excepciones.Usuario;
 using Papeleria.LogicaNegocio.Excepciones.Usuario.UsuarioExcepcions.Constrasenia;
@@ -60,6 +61,15 @@ namespace Empresa.LogicaDeNegocio.Sistema
         }
 
         public virtual void ModificarDatos(Usuario usu) {
+            if (usu.Contrasenia == null)
+                throw new ContraseniaNuloException("La contraseña no puede ser nula.");
+            if (usu.NombreCompleto == null)
+                throw new ContraseniaNuloException("La contraseña no puede ser nula.");
+            this.NombreCompleto = usu.NombreCompleto;
+            this.Contrasenia = usu.Contrasenia;
+        }
+        public virtual void ModificarDatos(EncargadoDeposito usu)
+        {
             if (usu.Contrasenia == null)
                 throw new ContraseniaNuloException("La contraseña no puede ser nula.");
             if (usu.NombreCompleto == null)
