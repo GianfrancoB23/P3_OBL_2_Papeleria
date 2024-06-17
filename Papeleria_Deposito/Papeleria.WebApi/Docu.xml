@@ -39,40 +39,5 @@
             <param name="id">Proporciona el ID del articulo a borrar</param>
             <returns>200 - Articulo borrado correctamente | 400 - ID Invalido o Articulo no valido | 500 - Error de la DB / Excepcion particular</returns>
         </member>
-        <member name="M:Papeleria.WebApi.Controllers.PedidosController.Get">
-            <summary>
-            Listar pedidos anulados
-            </summary>
-            <returns>200 - Retorna la lista con los pedidos anulados en orden descendente por Fecha | Status correspondiente al error</returns>
-        </member>
-        <member name="T:ImprimirCodigoFuente.ImpresionCodigoFuenteSolucion">
-            <summary>
-            Para utilizar este código:
-            1. Agregar un proyecto aplicación de consola en la solución que tiene el código fuente a imprimir
-            2. Sustituir el código de la clase Program por este código 
-            3. Configurar el proyecto de consola como proyecto de inicio
-            4. Ejecutar la aplicación
-            5. En la misma carpeta de la clase Program quedarán los archivos de texto con el código fuente
-            </summary>
-        </member>
-        <member name="M:ImprimirCodigoFuente.ImpresionCodigoFuenteSolucion.Main(System.String[])">
-            <summary>
-            Imprime los archivos de código con extensión .cs y las views .cshtml.
-            Para agregar otro tipo de archivo simplemente invocar al método Imprimir
-            indicando *.extensión
-            </summary>
-            <param name="args"></param>
-        </member>
-        <member name="M:ImprimirCodigoFuente.ImpresionCodigoFuenteSolucion.Imprimir(System.String,System.String)">
-            <summary>
-            Imprime los archivos de código fuente de la solución
-            </summary>
-            <param name="tipoArchivo">El nombre del archivo a imprimir.Para imprimir todos los de un tipo determinado usar "*.extensión" por ejemplo:  "*.cs"</param>
-            <param name="nombreArchivoSalida">El nombre del archivo de texto donde quedarà el código fuente</param>
-            <remarks>
-            Este código funciona siempre que el archivo de la solución (.sln) esté en la raíz de la solución,
-            es decir cuando todos los proyectos estàn en subcarpetas de la carpeta de la solución
-            </remarks>
-        </member>
     </members>
 </doc>
