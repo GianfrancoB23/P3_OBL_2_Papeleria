@@ -5,6 +5,12 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.LogicaNegocio", "Papeleria.LogicaNegocio\Papeleria.LogicaNegocio.csproj", "{953DF4C3-6BFE-421C-B9B6-3175DA7DC3B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.LogicaAplicacion", "Papeleria.LogicaAplicacion\Papeleria.LogicaAplicacion.csproj", "{8A459687-05D0-44D1-BDCE-4F410E499E99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.AccesoDatos", "Papeleria.AccesoDatos\Papeleria.AccesoDatos.csproj", "{9D2B329D-D931-4646-AAF0-7F191E3CFEB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.WebApi", "Papeleria.WebApi\Papeleria.WebApi.csproj", "{F2241ECF-B4C8-4295-A178-4BAE65DAA992}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +21,18 @@ Global
 		{953DF4C3-6BFE-421C-B9B6-3175DA7DC3B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{953DF4C3-6BFE-421C-B9B6-3175DA7DC3B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{953DF4C3-6BFE-421C-B9B6-3175DA7DC3B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A459687-05D0-44D1-BDCE-4F410E499E99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A459687-05D0-44D1-BDCE-4F410E499E99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A459687-05D0-44D1-BDCE-4F410E499E99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A459687-05D0-44D1-BDCE-4F410E499E99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D2B329D-D931-4646-AAF0-7F191E3CFEB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D2B329D-D931-4646-AAF0-7F191E3CFEB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D2B329D-D931-4646-AAF0-7F191E3CFEB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D2B329D-D931-4646-AAF0-7F191E3CFEB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2241ECF-B4C8-4295-A178-4BAE65DAA992}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2241ECF-B4C8-4295-A178-4BAE65DAA992}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2241ECF-B4C8-4295-A178-4BAE65DAA992}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2241ECF-B4C8-4295-A178-4BAE65DAA992}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Configuraciones\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Papeleria.LogicaAplicacion\Papeleria.LogicaAplicacion.csproj" />
+    <ProjectReference Include="..\Papeleria.LogicaNegocio\Papeleria.LogicaNegocio.csproj" />
+  </ItemGroup>
+
 </Project>
