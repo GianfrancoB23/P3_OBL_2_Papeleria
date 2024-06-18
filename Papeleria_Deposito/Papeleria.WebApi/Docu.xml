@@ -39,5 +39,40 @@
             <param name="id">Proporciona el ID del articulo a borrar</param>
             <returns>200 - Articulo borrado correctamente | 400 - ID Invalido o Articulo no valido | 500 - Error de la DB / Excepcion particular</returns>
         </member>
+        <member name="M:Papeleria.WebApi.Controllers.TipoMovimientosController.Get">
+            <summary>
+            Listar todos los Tipos Movimientos
+            </summary>
+            <returns>Tipos Movimientos ordenados por ID.</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.TipoMovimientosController.Get(System.Int32)">
+            <summary>
+            Listar TipoMovimiento particular
+            </summary>
+            <param name="id">Número entero con el valor ID del tipo movimiento a buscar.</param>
+            <returns>Tipo movimiento correspondiente al ID - Code 200 | Error 400 (Bad Request) si parametro/articulo es invalido |  500 - Error con la DB / Excepcion particular</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.TipoMovimientosController.Post(Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.TipoMovimientos.TipoMovimientoDTO)">
+            <summary>
+            Agregar Tipo Movimiento
+            </summary>
+            <param name="tipMov">Parametro que toma el "TipoMovimiento" armado con sus respectivos atributos y lo pasa a la aplicacion para registrarlo</param>
+            <returns>201 - Si el Articulo fue creado satisfactoriamente | 400 - Si el Articulo suministrado no es valido | 500 - Error con la DB / Excepcion particular</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.TipoMovimientosController.Put(System.Int32,Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.TipoMovimientos.TipoMovimientoDTO)">
+            <summary>
+            Modificar TipoMovimiento
+            </summary>
+            <param name="id">Proporciona el ID del objeto a modificar</param>
+            <param name="tipMov">Proporciona el cuerpo del articulo que va a reemplazar al existente</param>
+            <returns>200 - Articulo modificado correctamente | 400 - ID/Articulo nuevo invalido | 500 - Error en la DB / Excepcion particular</returns>
+        </member>
+        <member name="M:Papeleria.WebApi.Controllers.TipoMovimientosController.Delete(System.Int32)">
+            <summary>
+            Borrar Tipo Movimiento.
+            </summary>
+            <param name="id">Proporciona el ID del "Tipo Movimiento" a borrar</param>
+            <returns>200 - Articulo borrado correctamente | 400 - ID Invalido o Articulo no valido | 500 - Error de la DB / Excepcion particular</returns>
+        </member>
     </members>
 </doc>
