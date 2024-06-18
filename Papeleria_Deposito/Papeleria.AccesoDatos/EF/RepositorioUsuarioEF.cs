@@ -18,7 +18,7 @@ namespace Papeleria.AccesoDatos.EF
     public class RepositorioUsuarioEF : IRepositorioUsuario
     {
         private PapeleriaContext _db;
-        public RepositorioUsuarioEF() { _db = new PapeleriaContext(); }
+        public RepositorioUsuarioEF(PapeleriaContext context) { _db = context; }
 
         public Usuario GetUsuarioPorEmail(string email)
         {

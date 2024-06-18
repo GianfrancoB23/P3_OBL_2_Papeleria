@@ -17,12 +17,12 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
         public static Articulo FromDto(ArticuloDTO dto)
         {
             if (dto == null) throw new ArticuloNuloException(nameof(dto));
-            return new Articulo(dto.CodigoProveedor, dto.NombreArticulo, dto.Descripcion, dto.PrecioVP, dto.Stock);
+            return new Articulo(dto.CodigoProveedor, dto.NombreArticulo, dto.Descripcion, dto.PrecioVP);
         }
         public static Articulo FromDtoUpdate(ArticuloDTO dto)
         {
             if (dto == null) throw new ArticuloNuloException(nameof(dto));
-            var articulo = new Articulo(dto.CodigoProveedor, dto.NombreArticulo, dto.Descripcion, dto.PrecioVP, dto.Stock);
+            var articulo = new Articulo(dto.CodigoProveedor, dto.NombreArticulo, dto.Descripcion, dto.PrecioVP);
             articulo.ID = dto.Id;
             return articulo;
         }
@@ -36,7 +36,6 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
                 NombreArticulo = articulo.NombreArticulo.Nombre,
                 Descripcion = articulo.Descripcion.Descripcion,
                 PrecioVP = articulo.PrecioVP,
-                Stock = articulo.Stock.StockActual()
             };
         }
 

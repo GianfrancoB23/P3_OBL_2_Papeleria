@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using Papeleria.AccesoDatos.EF;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Articulos;
+using Papeleria.LogicaAplicacion.ImplementacionCasosUso.TipoMovimientos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Usuarios;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Articulos;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.TipoMovimientos;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 
@@ -25,8 +27,10 @@ namespace Papeleria.WebApi
             //Dependencias
             builder.Services.AddScoped<IRepositorioArticulo, RepositorioArticuloEF>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuarioEF>();
+            builder.Services.AddScoped<IRepositorioTipoMovimiento, RepositorioTipoMovimientoEF>();
+            builder.Services.AddScoped<IRepositorioMovimientoStock, RepositorioMovimientoStockEF>();
 
-            /* 
+            /* pal copypaste
              builder.Services.AddScoped<>();
              */
             builder.Services.AddScoped<IAltaArticulo, AltaArticulo>();
@@ -39,6 +43,18 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IGetUsuario, BuscarUsuario>();
             builder.Services.AddScoped<IGetAllUsuarios, GetAllUsuarios>();
             builder.Services.AddScoped<IModificarUsuario, ModificarUsuario>();
+
+            builder.Services.AddScoped<IAltaArticulo, AltaArticulo>();
+            builder.Services.AddScoped<IBorrarArticulo, BorrarArticulo>();
+            builder.Services.AddScoped<IGetArticulo, BuscarArticulo>();
+            builder.Services.AddScoped<IGetAllArticulos, GetAllArticulos>();
+            builder.Services.AddScoped<IUpdateArticulo, UpdateArticulo>();
+
+            builder.Services.AddScoped<IAltaTiposMovimientos, AltaTipoMovimiento>();
+            builder.Services.AddScoped<IBorrarTipoMovimiento, BorrarTipoMovimiento>();
+            builder.Services.AddScoped<IGetTipoMovimiento, BuscarTipoMovimiento>();
+            builder.Services.AddScoped<IGetAllTipoMovimiento, GetAllTiposMovimientos>();
+            builder.Services.AddScoped<IUpdateTipoMovimiento, ModificarTipoMovimiento>();
 
 
             //Configuración de la base de datos

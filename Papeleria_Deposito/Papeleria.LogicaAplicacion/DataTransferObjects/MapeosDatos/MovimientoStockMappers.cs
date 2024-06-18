@@ -18,14 +18,10 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
     public class MovimientoStockMappers
     {
         private static PapeleriaContext _context;
-        private static IRepositorioMovimientoStock _repoMovStock = new RepositorioMovimientoStockEF();
-        private static IRepositorioArticulo _repoArticulos = new RepositorioArticuloEF(_context);
         private static IGetArticulo _getArticulo;
-        private static IRepositorioTipoMovimiento _repoTipoMovimientos = new RepositorioTipoMovimientoEF();
         private static IGetTipoMovimiento _getTipoMovimiento;
-        private static IRepositorioUsuario _repoUsuarios = new RepositorioUsuarioEF();
         private static IGetUsuario _getUsuario;
-        public static MovimientoStock FromDTO(MovimientoStockDTO dto)
+        public static MovimientoStock FromDTO(MovimientoStockDTO dto, IRepositorioArticulo _repoArticulos)
         {
             _getArticulo = new BuscarArticulo(_repoArticulos);
             if (dto == null)
@@ -37,7 +33,7 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
             EncargadoDeposito usuario = _getUsuario.GetEncargadoByID(dto.UsuarioID);
             return new MovimientoStock(dto.FecHorMovRealizado, articulo, tipoMovimiento, usuario, dto.CtdUnidadesXMovimiento);
         }
-        public static MovimientoStock FromDTOUpdate(MovimientoStockDTO dto)
+        public static MovimientoStock FromDTOUpdate(MovimientoStockDTO dto, IRepositorioArticulo _repoArticulos, IRepositorioUsuario _repoUsuarios)
         {
             _getArticulo = new BuscarArticulo(_repoArticulos);
             _getUsuario = new BuscarUsuario(_repoUsuarios);

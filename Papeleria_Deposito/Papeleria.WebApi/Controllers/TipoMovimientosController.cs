@@ -18,14 +18,15 @@ namespace Papeleria.WebApi.Controllers
         private IGetTipoMovimiento _cuGetTipoMovimiento;
         private IUpdateTipoMovimiento _cuUpdateTipoMovimiento;
 
-        public TipoMovimientosController()
+        public TipoMovimientosController(IRepositorioTipoMovimiento repoTipoMov, IAltaTiposMovimientos cuAltaTipoMov, IBorrarTipoMovimiento cuBorrarTipoMov,
+            IGetAllTipoMovimiento cuGetAllTipoMov, IGetTipoMovimiento cuGetTipoMovimiento, IUpdateTipoMovimiento cuUpdateTipoMovimiento)
         {
-            _repoTipoMov = new RepositorioTipoMovimientoEF();
-            _cuAltaTipoMov = new AltaTipoMovimiento(_repoTipoMov);
-            _cuBorrarTipoMov = new BorrarTipoMovimiento(_repoTipoMov);
-            _cuGetAllTipoMov = new GetAllTiposMovimientos(_repoTipoMov);
-            _cuGetTipoMovimiento = new BuscarTipoMovimiento(_repoTipoMov);
-            _cuUpdateTipoMovimiento = new ModificarTipoMovimiento(_repoTipoMov);
+            _repoTipoMov = repoTipoMov;
+            _cuAltaTipoMov = cuAltaTipoMov;
+            _cuBorrarTipoMov = cuBorrarTipoMov;
+            _cuGetAllTipoMov = cuGetAllTipoMov;
+            _cuGetTipoMovimiento = cuGetTipoMovimiento;
+            _cuUpdateTipoMovimiento = cuUpdateTipoMovimiento;
         }
 
         // GET: TipoMovimientosController

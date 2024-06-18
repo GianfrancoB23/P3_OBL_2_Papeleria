@@ -15,7 +15,7 @@ namespace Papeleria.AccesoDatos.EF
     public class RepositorioMovimientoStockEF : IRepositorioMovimientoStock
     {
         private PapeleriaContext _db;
-        public RepositorioMovimientoStockEF() { _db = new PapeleriaContext(); }
+        public RepositorioMovimientoStockEF(PapeleriaContext context) { _db = context; }
         public void Add(MovimientoStock obj)
         {
             if (obj == null)

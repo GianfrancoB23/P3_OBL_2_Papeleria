@@ -16,15 +16,13 @@ namespace Empresa.LogicaDeNegocio.Entidades
         public CodigoProveedorArticulos CodigoProveedor{ get; set; }
 		public DescripcionArticulo Descripcion{ get; set; }
 		public double PrecioVP{ get; set; }
-		public StockArticulo Stock{ get; set; }
 
-        public Articulo(long codigoProveedor, string nombre, string descripcion, double precioVP, int stock)
+        public Articulo(long codigoProveedor, string nombre, string descripcion, double precioVP)
         {
             this.CodigoProveedor = new CodigoProveedorArticulos(codigoProveedor);
             this.NombreArticulo = new NombreArticulo(nombre);
             this.Descripcion = new DescripcionArticulo(descripcion);
             this.PrecioVP = precioVP;
-            this.Stock = new StockArticulo(stock);
             esValido();
         }
 
@@ -61,7 +59,6 @@ namespace Empresa.LogicaDeNegocio.Entidades
             this.NombreArticulo = obj.NombreArticulo;
             this.Descripcion = obj.Descripcion;
             this.PrecioVP = obj.PrecioVP;
-            this.Stock = obj.Stock;
         }
     }
 }

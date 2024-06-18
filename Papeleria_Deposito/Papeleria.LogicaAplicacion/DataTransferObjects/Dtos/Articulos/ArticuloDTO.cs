@@ -14,6 +14,5 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Articulos
         public string NombreArticulo { get; set; }
         public string Descripcion { get; set; }
         public double PrecioVP { get; set; }
-        public int Stock { get; set; }
     }
 }
