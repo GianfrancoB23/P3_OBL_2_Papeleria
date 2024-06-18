@@ -22,6 +22,10 @@ namespace Papeleria.WebApi.Controllers
         {
             _repoTipoMov = new RepositorioTipoMovimientoEF();
             _cuAltaTipoMov = new AltaTipoMovimiento(_repoTipoMov);
+            _cuBorrarTipoMov = new BorrarTipoMovimiento(_repoTipoMov);
+            _cuGetAllTipoMov = new GetAllTiposMovimientos(_repoTipoMov);
+            _cuGetTipoMovimiento = new BuscarTipoMovimiento(_repoTipoMov);
+            _cuUpdateTipoMovimiento = new ModificarTipoMovimiento(_repoTipoMov);
         }
 
         // GET: TipoMovimientosController
