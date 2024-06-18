@@ -8,5 +8,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.TipoMovimientos
 {
     public interface IFiltrarTipoMovimiento
     {
+
     }
 }

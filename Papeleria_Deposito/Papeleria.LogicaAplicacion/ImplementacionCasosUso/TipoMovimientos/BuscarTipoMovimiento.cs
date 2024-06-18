@@ -50,5 +50,17 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.TipoMovimientos
             }
             
         }
+
+        public TipoMovimiento GetByNombre(string nombre)
+        {
+            try
+            {
+                return _repoTipoMovimiento.GetTipoMovimientoXNombre(nombre);
+            }
+            catch (Exception ex)
+            {
+                throw new TipoMovimientoNuloException(ex.Message);
+            }
+        }
     }
 }

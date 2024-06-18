@@ -15,5 +15,7 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.TipoMovimientos
     {
         TipoMovimientoDTO GetByIdDTO(int id);
         TipoMovimiento GetById(int id);
+
+        TipoMovimiento GetByNombre(string nombre);
     }
 }

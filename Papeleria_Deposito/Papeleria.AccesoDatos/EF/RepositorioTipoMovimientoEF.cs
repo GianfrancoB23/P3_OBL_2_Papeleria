@@ -14,7 +14,10 @@ namespace Papeleria.AccesoDatos.EF
     public class RepositorioTipoMovimientoEF : IRepositorioTipoMovimiento
     {
         private PapeleriaContext _db;
-        public RepositorioTipoMovimientoEF(PapeleriaContext context) { _db = context; }
+        public RepositorioTipoMovimientoEF(PapeleriaContext context)
+        {
+            _db = context;
+        }
 
         public void Add(TipoMovimiento obj)
         {
@@ -64,7 +67,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public TipoMovimiento GetTipoMovimientoXNombre(string nombre)
         {
-            if(nombre==null)
+            if (nombre == null)
                 throw new TipoMovimientoNuloException("El nombre ingresado para GetTipoMovimientoXNombre no puede ser nulo.");
             return _db.TiposMovimientos.FirstOrDefault(u => u.Nombre == nombre);
         }

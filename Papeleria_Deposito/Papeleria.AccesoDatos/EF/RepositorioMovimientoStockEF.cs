@@ -31,6 +31,36 @@ namespace Papeleria.AccesoDatos.EF
             }
         }
 
+        public bool EstaEnUsoTipoMovimientoByID(int id)
+        {
+            if (id == null)
+                throw new MovimientoStockNuloException("No puede ser nulo el ID del TipoMovimiento a buscar.");
+            try
+            {
+                var tipMovs = _db.MovimientoStocks.Where(tipMov => tipMov.Movimiento.ID == id);
+                return tipMovs != null;
+            }
+            catch (Exception ex)
+            {
+                throw new MovimientoStockNoValidoException(ex.Message);
+            }
+        }
+
+        public bool EstaEnUsoTipoMovimientoByNombre(string nombre)
+        {
+            if (nombre == null)
+                throw new MovimientoStockNuloException("No puede ser nulo el nombre del TipoMovimiento a buscar.");
+            try
+            {
+                var tipMovs = _db.MovimientoStocks.Where(tipMov => tipMov.Movimiento.Nombre.Contains(nombre));
+                return tipMovs != null;
+            }
+            catch (Exception ex)
+            {
+                throw new MovimientoStockNoValidoException(ex.Message);
+            }
+        }
+
         public IEnumerable<MovimientoStock> GetAll()
         {
             return _db.MovimientoStocks.ToList();

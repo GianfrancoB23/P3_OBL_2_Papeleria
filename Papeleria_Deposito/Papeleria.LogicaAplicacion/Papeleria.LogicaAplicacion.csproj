@@ -11,8 +11,4 @@
 	  <ProjectReference Include="..\Papeleria.AccesoDatos\Papeleria.AccesoDatos.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="InterfacesCasosUso\MovimientoStock\" />
-  </ItemGroup>
-
 </Project>

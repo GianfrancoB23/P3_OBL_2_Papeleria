@@ -6,8 +6,10 @@ using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.TipoMovimientos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Articulos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.TipoMovimientos;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Articulos;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.MovimientoStock;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.TipoMovimientos;
 using Papeleria.LogicaNegocio.Excepciones.Articulo;
+using Papeleria.LogicaNegocio.Excepciones.MovimientoStock;
 using Papeleria.LogicaNegocio.Excepciones.TipoMovimiento;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 
@@ -15,14 +17,16 @@ namespace Papeleria.WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TipoMovimientosController : Controller
+    public class TipoMovimientosController : ControllerBase
     {
         private IRepositorioTipoMovimiento _repoTipoMov;
+        private IRepositorioMovimientoStock _repoStock;
         private IAltaTiposMovimientos _cuAltaTipoMov;
         private IBorrarTipoMovimiento _cuBorrarTipoMov;
         private IGetAllTipoMovimiento _cuGetAllTipoMov;
         private IGetTipoMovimiento _cuGetTipoMovimiento;
         private IUpdateTipoMovimiento _cuUpdateTipoMovimiento;
+        private IFiltrarMovimiento _cuBuscarMovimiento;
 
         public TipoMovimientosController(IRepositorioTipoMovimiento repoTipoMov, IAltaTiposMovimientos cuAltaTipoMov, IBorrarTipoMovimiento cuBorrarTipoMov,
             IGetAllTipoMovimiento cuGetAllTipoMov, IGetTipoMovimiento cuGetTipoMovimiento, IUpdateTipoMovimiento cuUpdateTipoMovimiento)
@@ -62,16 +66,40 @@ namespace Papeleria.WebApi.Controllers
 
         // GET api/<TipoMovimientosController>/5
         /// <summary>
-        /// Listar TipoMovimiento particular
+        /// Listar TipoMovimiento particular por ID
         /// </summary>
         /// <param name="id">Número entero con el valor ID del tipo movimiento a buscar.</param>
         /// <returns>Tipo movimiento correspondiente al ID - Code 200 | Error 400 (Bad Request) si parametro/articulo es invalido |  500 - Error con la DB / Excepcion particular</returns>
         [HttpGet("{ID}", Name = "GetTipoMovimientoByID")]
-        public ActionResult<ArticuloDTO> Get(int id)
+        public ActionResult<TipoMovimientoDTO> Get(int id)
         {
             try
             {
                 var tipMovDTO = _cuGetTipoMovimiento.GetById(id);
+                return Ok(tipMovDTO);
+            }
+            catch (TipoMovimientoNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // GET api/<TipoMovimientosController>/nombre
+        /// <summary>
+        /// Listar TipoMovimiento particular por nombre.
+        /// </summary>
+        /// <param name="nombre">Nombre del tipo movimiento a buscar.</param>
+        /// <returns>Tipo movimiento correspondiente al ID - Code 200 | Error 400 (Bad Request) si parametro/articulo es invalido |  500 - Error con la DB / Excepcion particular</returns>
+        [HttpGet("{Nombre}", Name = "GetByNombre")]
+        public ActionResult<TipoMovimientoDTO> GetByNombre(string nombre)
+        {
+            try
+            {
+                var tipMovDTO = _cuGetTipoMovimiento.GetByNombre(nombre);
                 return Ok(tipMovDTO);
             }
             catch (TipoMovimientoNoValidoException ex)
@@ -116,13 +144,16 @@ namespace Papeleria.WebApi.Controllers
         /// <param name="id">Proporciona el ID del objeto a modificar</param>
         /// <param name="tipMov">Proporciona el cuerpo del articulo que va a reemplazar al existente</param>
         /// <returns>200 - Articulo modificado correctamente | 400 - ID/Articulo nuevo invalido | 500 - Error en la DB / Excepcion particular</returns>
-        [HttpPut("{id}")]
+        [HttpPut("{ID}")]
         public ActionResult<TipoMovimientoDTO> Put(int id, TipoMovimientoDTO tipMov)
         {
             try
             {
-                _cuUpdateTipoMovimiento.Ejecutar(id, tipMov);
-                return Ok(tipMov);
+                if (_cuBuscarMovimiento.ExisteTipoMovimientoEnMovimientoByID(id))
+                    throw new MovimientoStockNoValidoException("Existe un MovimientoStock que esta utilizando este TipoMovimiento.");
+                else
+                    _cuUpdateTipoMovimiento.Ejecutar(id, tipMov);
+                    return Ok(tipMov);
             }
             catch (TipoMovimientoNoValidoException ex)
             {
@@ -140,13 +171,16 @@ namespace Papeleria.WebApi.Controllers
         /// </summary>
         /// <param name="id">Proporciona el ID del "Tipo Movimiento" a borrar</param>
         /// <returns>200 - Articulo borrado correctamente | 400 - ID Invalido o Articulo no valido | 500 - Error de la DB / Excepcion particular</returns>
-        [HttpDelete("{id}")]
+        [HttpDelete("{ID}")]
         public ActionResult<TipoMovimientoDTO> Delete(int id)
         {
             try
             {
-                _cuBorrarTipoMov.Ejecutar(id);
-                return Ok();
+                if (_cuBuscarMovimiento.ExisteTipoMovimientoEnMovimientoByID(id))
+                    throw new MovimientoStockNoValidoException("Existe un MovimientoStock que esta utilizando este TipoMovimiento.");
+                else
+                    _cuBorrarTipoMov.Ejecutar(id);
+                    return Ok();
             }
             catch (TipoMovimientoNoValidoException ex)
             {
