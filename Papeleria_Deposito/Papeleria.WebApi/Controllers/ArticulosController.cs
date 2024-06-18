@@ -23,14 +23,14 @@ namespace Papeleria.WebApi.Controllers
         private IBorrarArticulo _cuBorrarArticulo;
         private IUpdateArticulo _cuModificarArticulo;
 
-        public ArticulosController()
+        public ArticulosController(IRepositorioArticulo _repo, IAltaArticulo cuAltaArticulo, IGetAllArticulos cuGetArticulos,
+            IGetArticulo cuGetArticulo, IBorrarArticulo cuBorrarArticulo, IUpdateArticulo cuModificarArticulo)
         {
-            _repoArticulos = new RepositorioArticuloEF(_context);
-            _cuGetArticulos = new GetAllArticulos(_repoArticulos);
-            _cuGetArticulo = new BuscarArticulo(_repoArticulos);
-            _cuAltaArticulo = new AltaArticulo(_repoArticulos);
-            _cuBorrarArticulo = new BorrarArticulo(_repoArticulos);
-            _cuModificarArticulo = new UpdateArticulo(_repoArticulos);
+            _cuGetArticulos = cuGetArticulos;
+            _cuGetArticulo = cuGetArticulo;
+            _cuAltaArticulo = cuAltaArticulo;
+            _cuBorrarArticulo = cuBorrarArticulo;
+            _cuModificarArticulo = cuModificarArticulo;
         }
         // GET: api/<ArticulosController>
         /// <summary>

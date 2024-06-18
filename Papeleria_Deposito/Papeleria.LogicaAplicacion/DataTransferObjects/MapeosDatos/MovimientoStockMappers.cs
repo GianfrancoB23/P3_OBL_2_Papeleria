@@ -17,8 +17,9 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
 {
     public class MovimientoStockMappers
     {
+        private static PapeleriaContext _context;
         private static IRepositorioMovimientoStock _repoMovStock = new RepositorioMovimientoStockEF();
-        private static IRepositorioArticulo _repoArticulos = new RepositorioArticuloEF();
+        private static IRepositorioArticulo _repoArticulos = new RepositorioArticuloEF(_context);
         private static IGetArticulo _getArticulo;
         private static IRepositorioTipoMovimiento _repoTipoMovimientos = new RepositorioTipoMovimientoEF();
         private static IGetTipoMovimiento _getTipoMovimiento;
