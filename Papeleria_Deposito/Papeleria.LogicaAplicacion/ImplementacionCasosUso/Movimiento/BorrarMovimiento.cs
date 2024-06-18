@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
-
+{ 
     public class BorrarMovimiento : IRemove<MovimientoStock>
     {
         public void Remove(MovimientoStock obj)
