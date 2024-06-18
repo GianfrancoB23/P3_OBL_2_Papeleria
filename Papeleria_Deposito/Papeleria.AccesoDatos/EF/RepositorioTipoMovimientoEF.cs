@@ -1,4 +1,5 @@
-﻿using Papeleria.LogicaNegocio.Entidades;
+﻿using Empresa.LogicaDeNegocio.Sistema;
+using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.Excepciones.MovimientoStock;
 using Papeleria.LogicaNegocio.Excepciones.TipoMovimiento;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
@@ -30,6 +31,12 @@ namespace Papeleria.AccesoDatos.EF
             }
         }
 
+        public bool ExisteTipoMovimientoXNombre(string nombre)
+        {
+            TipoMovimiento tipMov = GetTipoMovimientoXNombre(nombre);
+            return tipMov != null;
+        }
+
         public IEnumerable<TipoMovimiento> GetAll()
         {
             return _db.TiposMovimientos.ToList();
@@ -53,6 +60,13 @@ namespace Papeleria.AccesoDatos.EF
         public IEnumerable<TipoMovimiento> GetObjectsByID(List<int> ids)
         {
             throw new NotImplementedException();
+        }
+
+        public TipoMovimiento GetTipoMovimientoXNombre(string nombre)
+        {
+            if(nombre==null)
+                throw new TipoMovimientoNuloException("El nombre ingresado para GetTipoMovimientoXNombre no puede ser nulo.");
+            return _db.TiposMovimientos.FirstOrDefault(u => u.Nombre == nombre);
         }
 
         public void Remove(int id)

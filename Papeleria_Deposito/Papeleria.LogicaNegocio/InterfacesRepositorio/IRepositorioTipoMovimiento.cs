@@ -9,5 +9,7 @@ namespace Papeleria.LogicaNegocio.InterfacesRepositorio
 {
     public interface IRepositorioTipoMovimiento:IRepositorio<TipoMovimiento>
     {
+        public bool ExisteTipoMovimientoXNombre(string nombre);
+        public TipoMovimiento GetTipoMovimientoXNombre(string nombre);
     }
 }
