@@ -13,6 +13,8 @@ using Papeleria.LogicaNegocio.InterfacesRepositorio;
 
 namespace Papeleria.WebApi.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TipoMovimientosController : Controller
     {
         private IRepositorioTipoMovimiento _repoTipoMov;
