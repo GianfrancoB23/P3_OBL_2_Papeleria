@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <DocumentationFile>.\Docu.xml</DocumentationFile>
+    <UserSecretsId>f31c377d-e298-48c8-bf06-2f3719790837</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

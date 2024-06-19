@@ -24,12 +24,11 @@ namespace Papeleria.AccesoDatos.EF
         {
             
         }
-
-        /*  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
           {
-              optionsBuilder.UseSqlServer(@"SERVER=(localDB)\Mssqllocaldb;DATABASE=PapeleriaOBLv2;INTEGRATED SECURITY=True; encrypt=false");
+            if (!optionsBuilder.IsConfigured) throw new Exception("OptionsBuilder not configured");
           }
-  */
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder); 
