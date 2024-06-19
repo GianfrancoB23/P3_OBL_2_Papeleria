@@ -26,7 +26,7 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.TipoMovimientos
                 var tmOrigen = _repoTipoMovimiento.GetAll();
                 if (tmOrigen == null || tmOrigen.Count() == 0)
                 {
-                    throw new TipoMovimientoNuloException("No hay autores registrados");
+                    throw new TipoMovimientoNuloException("No hay tipo movimientos registrados");
                 }
                 return TipoMovimientoMappers.FromLista(tmOrigen);
             }

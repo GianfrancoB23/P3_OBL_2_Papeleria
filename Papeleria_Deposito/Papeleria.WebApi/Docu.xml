@@ -45,13 +45,6 @@
             </summary>
             <returns>Tipos Movimientos ordenados por ID.</returns>
         </member>
-        <member name="M:Papeleria.WebApi.Controllers.TipoMovimientosController.Get(System.Int32)">
-            <summary>
-            Listar TipoMovimiento particular por ID
-            </summary>
-            <param name="id">Número entero con el valor ID del tipo movimiento a buscar.</param>
-            <returns>Tipo movimiento correspondiente al ID - Code 200 | Error 400 (Bad Request) si parametro/articulo es invalido |  500 - Error con la DB / Excepcion particular</returns>
-        </member>
         <member name="M:Papeleria.WebApi.Controllers.TipoMovimientosController.GetByNombre(System.String)">
             <summary>
             Listar TipoMovimiento particular por nombre.
