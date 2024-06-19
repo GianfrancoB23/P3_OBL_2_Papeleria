@@ -1,7 +1,7 @@
 ﻿using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.MovimientoStock;
 using Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos;
 using Papeleria.LogicaAplicacion.Interaces;
-using Papeleria.LogicaAplicacion.InterfacesCasosUso.MovimientoStock;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos;
 using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 using System;

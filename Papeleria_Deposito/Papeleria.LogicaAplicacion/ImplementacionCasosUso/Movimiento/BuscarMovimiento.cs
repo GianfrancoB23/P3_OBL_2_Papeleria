@@ -1,5 +1,10 @@
-﻿using Papeleria.LogicaAplicacion.InterfacesCasoDeUsoGeneral;
+﻿using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.MovimientoStock;
+using Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos;
+using Papeleria.LogicaAplicacion.InterfacesCasoDeUsoGeneral;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos;
 using Papeleria.LogicaNegocio.Entidades;
+using Papeleria.LogicaNegocio.Excepciones.Articulo;
+using Papeleria.LogicaNegocio.Excepciones.Usuario;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -9,11 +14,18 @@ using System.Threading.Tasks;
 
 namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
 {
-    public class BuscarMovimiento : IGet<MovimientoStock>
+    public class BuscarMovimiento : IGetMovimiento
     {
+
+        private IRepositorioMovimientoStock _repoMov;
+        private IRepositorioArticulo _repoArt;
+        public BuscarMovimiento(IRepositorioMovimientoStock repo, IRepositorioArticulo repoArt)
+        {
+            _repoMov = repo; _repoArt = repoArt;
+        }
         public MovimientoStock Get(int id)
         {
-            throw new NotImplementedException();
+            return _repoMov.GetById(id);
         }
 
         public MovimientoStock Get(string id)
@@ -21,14 +33,25 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
             throw new NotImplementedException();
         }
 
-        public IEnumerable<MovimientoStock> GetAll(IRepositorio<MovimientoStock> repo)
+        public IEnumerable<MovimientoStockDTO> GetAll()
         {
-            throw new NotImplementedException();
+            var movimientos = _repoMov.GetAll();
+            if (movimientos == null || movimientos.Count() == 0)
+            {
+                throw new Exception("No hay autores registrados");
+            }
+            return MovimientoStockMappers.FromLista(movimientos);
         }
 
-        public IEnumerable<MovimientoStock> GetMany(string id)
+        public MovimientoStockDTO GetByDTO(int id)
         {
-            throw new NotImplementedException();
+            var movimiento = _repoMov.GetById(id);
+            if (movimiento == null)
+            {
+                throw new Exception("Articulo no encontrado con el ID especificado"); // Handler de exception
+            }
+            var ret = MovimientoStockMappers.ToDto(movimiento);
+            return ret;
         }
     }
 }
