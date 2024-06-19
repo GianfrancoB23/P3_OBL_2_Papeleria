@@ -16,10 +16,10 @@ namespace Papeleria.LogicaNegocio.Entidades
         public DateTime FecHorMovRealizado { get; set; }
         public Articulo Articulo { get; set; }
         public TipoMovimiento Movimiento { get; set; }
-        public EncargadoDeposito UsuarioRealizaMovimiento { get; set; }
+        public Usuario UsuarioRealizaMovimiento { get; set; }
         public int CtdUnidadesXMovimiento { get; set; }
 
-        public MovimientoStock(Articulo articulo, TipoMovimiento movimiento, EncargadoDeposito usuarioRealizaMovimiento, int ctdUnidadesXMovimiento)
+        public MovimientoStock(Articulo articulo, TipoMovimiento movimiento, Usuario usuarioRealizaMovimiento, int ctdUnidadesXMovimiento)
         {
             FecHorMovRealizado = DateTime.Now;
             Articulo = articulo;

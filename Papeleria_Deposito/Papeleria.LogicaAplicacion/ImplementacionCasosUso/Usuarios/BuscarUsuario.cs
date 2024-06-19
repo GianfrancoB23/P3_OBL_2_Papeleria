@@ -37,9 +37,16 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Usuarios
             return _repoUsuarios.GetById(id);
         }
 
-        public EncargadoDeposito GetEncargadoByID(int id)
+        public Usuario GetEncargadoByID(int id)
         {
-            throw new NotImplementedException();
+            Usuario usr = _repoUsuarios.GetById(id);
+            if (usr.GetType().Name == "EncargadoDeposito")
+            {
+                return usr;
+            } else
+            {
+                throw new Exception("El ID especificado no es de un encargado del deposito"); // TODO Exception Handler
+            }
         }
     }
         

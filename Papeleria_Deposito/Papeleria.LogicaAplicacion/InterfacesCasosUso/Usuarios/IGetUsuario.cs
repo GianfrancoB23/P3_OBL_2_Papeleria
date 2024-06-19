@@ -13,6 +13,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios
     {
         UsuarioDTO GetByIdDTO(int id);
         Usuario GetById(int id);
-        EncargadoDeposito GetEncargadoByID(int id);
+        Usuario GetEncargadoByID(int id);
     }
 }

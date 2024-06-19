@@ -18,18 +18,20 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
         private IRepositorioMovimientoStock _repo;
         private IRepositorioArticulo _repoArt;
         private IRepositorioUsuario _repoUsr;
-        public UpdateMovimiento(IRepositorioMovimientoStock repo, IRepositorioArticulo repoArt, IRepositorioUsuario repoUsr)
+        private IRepositorioTipoMovimiento _repoTipMov;
+        public UpdateMovimiento(IRepositorioMovimientoStock repo, IRepositorioArticulo repoArt, IRepositorioUsuario repoUsr, IRepositorioTipoMovimiento repoTipMov)
         {
             _repo = repo;
             _repoArt = repoArt;
             _repoUsr = repoUsr;
+            _repoTipMov = repoTipMov;
         }
         public void Update(int id, MovimientoStockDTO obj)
         {
             if (obj == null) { throw new Exception("Articulo modificado no puede ser nulo"); } // TODO exception handler
             try
             {
-                var mov = MovimientoStockMappers.FromDTOUpdate(obj, _repoArt, _repoUsr);
+                var mov = MovimientoStockMappers.FromDTOUpdate(obj, _repoArt, _repoUsr, _repoTipMov);
                 _repo.Update(id, mov);
             }
             catch (Exception ex) { throw new Exception(ex.Message); }

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Papeleria.AccesoDatos.EF;
+using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Articulos;
 using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Usuarios;
 using Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Usuarios;
@@ -51,6 +52,41 @@ namespace Papeleria.WebApi.Controllers
                 var usuariosDto = _getAllUsuarios.Ejecutar();
                 var ordenada = usuariosDto.OrderBy(usuario => usuario.Nombre);
                 return Ok(ordenada);
+            }
+            catch (ArticuloNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpPost]
+        public ActionResult<UsuarioDTO> Post(UsuarioDTO usr)
+        {
+            try
+            {
+                _altaUsuario.Ejecutar(usr);
+                return CreatedAtRoute("GetById", new { id = usr.Id }, usr);
+            }
+
+            catch (ArticuloNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+        [HttpGet("{id}", Name = "GetByID")]
+        public ActionResult<ArticuloDTO> Get(int id)
+        {
+            try
+            {
+                var usr = _getUsuario.GetById(id);
+                return Ok(usr);
             }
             catch (ArticuloNoValidoException ex)
             {

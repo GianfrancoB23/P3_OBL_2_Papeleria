@@ -73,23 +73,23 @@ namespace Papeleria.WebApi.Controllers
         /// </summary>
         /// <param name="ID">Número entero con el valor ID del tipo movimiento a buscar.</param>
         /// <returns>Tipo movimiento correspondiente al ID - Code 200 | Error 400 (Bad Request) si parametro/articulo es invalido |  500 - Error con la DB / Excepcion particular</returns>
-        //[HttpGet("{ID}", Name = "GetTipoMovimientoByID")]
-        //public ActionResult<TipoMovimientoDTO> GetTipoMovimientoByID(int id)
-        //{
-        //    try
-        //    {
-        //        var tipMovDTO = _cuGetTipoMovimiento.GetById(id);
-        //        return Ok(tipMovDTO);
-        //    }
-        //    catch (TipoMovimientoNoValidoException ex)
-        //    {
-        //        return BadRequest(ex.Message);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
+        [HttpGet("{id}", Name = "GetTipoMovimientoByID")]
+        public ActionResult<TipoMovimientoDTO> Get(int id)
+        {
+            try
+            {
+                var tipMovDTO = _cuGetTipoMovimiento.GetById(id);
+                return Ok(tipMovDTO);
+            }
+            catch (TipoMovimientoNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
         // GET api/<TipoMovimientosController>/nombre
         /// <summary>
@@ -97,6 +97,7 @@ namespace Papeleria.WebApi.Controllers
         /// </summary>
         /// <param name="nombre">Nombre del tipo movimiento a buscar.</param>
         /// <returns>Tipo movimiento correspondiente al ID - Code 200 | Error 400 (Bad Request) si parametro/articulo es invalido |  500 - Error con la DB / Excepcion particular</returns>
+        /*
         [HttpGet("{Nombre}", Name = "GetByNombre")]
         [AllowAnonymous]
         public ActionResult<TipoMovimientoDTO> GetByNombre(string nombre)
@@ -115,7 +116,7 @@ namespace Papeleria.WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
+        */
         // POST api/<TipoMovimientosController>
         /// <summary>
         /// Agregar Tipo Movimiento

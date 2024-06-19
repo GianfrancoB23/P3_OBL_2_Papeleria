@@ -16,9 +16,11 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
     {
         private IRepositorioMovimientoStock _repoMov;
         private IRepositorioArticulo _repoArt;
-        public AltaMovimiento(IRepositorioMovimientoStock repo, IRepositorioArticulo repoArt)
+        private IRepositorioUsuario _repoUsr;
+        private IRepositorioTipoMovimiento _repoTipMov;
+        public AltaMovimiento(IRepositorioMovimientoStock repo, IRepositorioArticulo repoArt, IRepositorioUsuario repoUsr, IRepositorioTipoMovimiento repoTipMov)
         {
-            _repoMov = repo; _repoArt = repoArt;
+            _repoMov = repo; _repoArt = repoArt; _repoUsr = repoUsr; _repoTipMov = repoTipMov ;
         }
         public void Crear(MovimientoStockDTO obj)
         {
@@ -30,7 +32,7 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
             {
                 throw new Exception("No se puede realizar un movimiento de cantidades nulas o negativas");
             }
-            MovimientoStock movimiento = MovimientoStockMappers.FromDTO(obj, _repoArt);
+            MovimientoStock movimiento = MovimientoStockMappers.FromDTO(obj, _repoArt, _repoUsr, _repoTipMov);
             _repoMov.Add(movimiento);
         }
     }
