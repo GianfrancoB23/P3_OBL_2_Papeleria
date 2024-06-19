@@ -6,6 +6,7 @@ using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.TipoMovimientos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Articulos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.TipoMovimientos;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Articulos;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.MovimientoStock;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.TipoMovimientos;
 using Papeleria.LogicaNegocio.Excepciones.Articulo;

@@ -28,11 +28,6 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
             return _repoMov.GetById(id);
         }
 
-        public MovimientoStock Get(string id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<MovimientoStockDTO> GetAll()
         {
             var movimientos = _repoMov.GetAll();

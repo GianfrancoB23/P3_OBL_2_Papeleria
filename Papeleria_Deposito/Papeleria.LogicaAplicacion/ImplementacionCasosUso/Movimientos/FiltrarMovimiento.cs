@@ -1,5 +1,5 @@
 ﻿using Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos;
-using Papeleria.LogicaAplicacion.InterfacesCasosUso.MovimientoStock;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos;
 using Papeleria.LogicaNegocio.Excepciones.TipoMovimiento;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 using System;

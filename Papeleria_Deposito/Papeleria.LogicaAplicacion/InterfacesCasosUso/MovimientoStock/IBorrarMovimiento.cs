@@ -1,5 +1,4 @@
-﻿using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.MovimientoStock;
-using Papeleria.LogicaNegocio.Entidades;
+﻿using Papeleria.LogicaNegocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +10,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos
     public interface IBorrarMovimiento
     {
         public void Remove(int id);
-        public void Remove(MovimientoStock obj);
+        public void Remove(Papeleria.LogicaNegocio.Entidades.MovimientoStock obj);
     }
 }

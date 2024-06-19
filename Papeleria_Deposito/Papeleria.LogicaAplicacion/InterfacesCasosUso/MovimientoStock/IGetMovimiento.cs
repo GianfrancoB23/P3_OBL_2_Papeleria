@@ -11,9 +11,8 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos
 {
     public interface IGetMovimiento
     {
-        public MovimientoStock Get(int id);
+        public Papeleria.LogicaNegocio.Entidades.MovimientoStock Get(int id);
         public MovimientoStockDTO GetByDTO(int id);
-        public MovimientoStock Get(string id);
         public IEnumerable<MovimientoStockDTO> GetAll();
     }
 }
