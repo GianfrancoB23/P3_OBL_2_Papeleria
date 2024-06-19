@@ -6,9 +6,12 @@ using Microsoft.IdentityModel.Tokens;
 using NuGet.Common;
 using Papeleria.AccesoDatos.EF;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Articulos;
+using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.TipoMovimientos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Usuarios;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Articulos;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.MovimientoStock;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.TipoMovimientos;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
@@ -44,6 +47,8 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IGetArticulo, BuscarArticulo>();
             builder.Services.AddScoped<IGetAllArticulos, GetAllArticulos>();
             builder.Services.AddScoped<IUpdateArticulo, UpdateArticulo>();
+
+            builder.Services.AddScoped<ILogin, Login>();
             builder.Services.AddScoped<IAltaUsuario, AltaUsuarios>();
             builder.Services.AddScoped<IBorrarUsuario, BorrarUsuario>();
             builder.Services.AddScoped<IGetUsuario, BuscarUsuario>();
@@ -61,6 +66,11 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IGetTipoMovimiento, BuscarTipoMovimiento>();
             builder.Services.AddScoped<IGetAllTipoMovimiento, GetAllTiposMovimientos>();
             builder.Services.AddScoped<IUpdateTipoMovimiento, ModificarTipoMovimiento>();
+
+            builder.Services.AddScoped<IAltaMovimiento, AltaMovimiento>();
+            builder.Services.AddScoped<IBorrarMovimiento, BorrarMovimiento>();
+            builder.Services.AddScoped<IGetMovimiento, BuscarMovimiento>();
+            builder.Services.AddScoped<IUpdateMovimiento, UpdateMovimiento>();
 
 
             //Configuración de la base de datos

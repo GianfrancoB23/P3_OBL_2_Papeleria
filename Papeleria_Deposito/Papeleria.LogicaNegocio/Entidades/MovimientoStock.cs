@@ -19,9 +19,9 @@ namespace Papeleria.LogicaNegocio.Entidades
         public EncargadoDeposito UsuarioRealizaMovimiento { get; set; }
         public int CtdUnidadesXMovimiento { get; set; }
 
-        public MovimientoStock(DateTime fecHorMovRealizado, Articulo articulo, TipoMovimiento movimiento, EncargadoDeposito usuarioRealizaMovimiento, int ctdUnidadesXMovimiento)
+        public MovimientoStock(Articulo articulo, TipoMovimiento movimiento, EncargadoDeposito usuarioRealizaMovimiento, int ctdUnidadesXMovimiento)
         {
-            FecHorMovRealizado = fecHorMovRealizado;
+            FecHorMovRealizado = DateTime.Now;
             Articulo = articulo;
             Movimiento = movimiento;
             UsuarioRealizaMovimiento = usuarioRealizaMovimiento;

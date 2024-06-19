@@ -31,7 +31,7 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
             Articulo articulo = _getArticulo.GetById(dto.ArticuloID);
             TipoMovimiento tipoMovimiento = _getTipoMovimiento.GetById(dto.TipoMovimientoID);
             EncargadoDeposito usuario = _getUsuario.GetEncargadoByID(dto.UsuarioID);
-            return new MovimientoStock(dto.FecHorMovRealizado, articulo, tipoMovimiento, usuario, dto.CtdUnidadesXMovimiento);
+            return new MovimientoStock(articulo, tipoMovimiento, usuario, dto.CtdUnidadesXMovimiento);
         }
         public static MovimientoStock FromDTOUpdate(MovimientoStockDTO dto, IRepositorioArticulo _repoArticulos, IRepositorioUsuario _repoUsuarios)
         {
@@ -44,7 +44,7 @@ namespace Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos
             Articulo articulo = _getArticulo.GetById(dto.ArticuloID);
             EncargadoDeposito usuario = _getUsuario.GetEncargadoByID(dto.UsuarioID);
             TipoMovimiento tipoMovimiento = _getTipoMovimiento.GetById(dto.TipoMovimientoID);
-            MovimientoStock mov = new MovimientoStock(dto.FecHorMovRealizado, articulo, tipoMovimiento, usuario, dto.CtdUnidadesXMovimiento);
+            MovimientoStock mov = new MovimientoStock(articulo, tipoMovimiento, usuario, dto.CtdUnidadesXMovimiento);
             mov.ID = dto.ID;
             return mov;
         }
