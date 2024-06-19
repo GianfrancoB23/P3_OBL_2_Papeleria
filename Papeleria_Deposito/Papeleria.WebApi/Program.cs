@@ -1,5 +1,9 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using NuGet.Common;
 using Papeleria.AccesoDatos.EF;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Articulos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.TipoMovimientos;
@@ -8,6 +12,8 @@ using Papeleria.LogicaAplicacion.InterfacesCasosUso.Articulos;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.TipoMovimientos;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
+using System.Drawing;
+using System.Text;
 
 namespace Papeleria.WebApi
 {
@@ -62,9 +68,36 @@ namespace Papeleria.WebApi
                 options => options.UseSqlServer(@"SERVER=(localDB)\Mssqllocaldb;DATABASE=PapeleriaOBLv2;INTEGRATED SECURITY=True; encrypt=false")
             );
 
+            //Inyectar los servicios necesarios para la autenticacion
+            var claveDificil =
+                "ClaveMuySecreta1_ClaveMuySecreta1_ClaveMuySecreta1_ClaveMuySecreta1_ClaveMuySecreta1_ClaveMuySecreta1";
+            var claveDificilEncriptada = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(claveDificil));
+
+            #region Registro de servicios JWT.
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                 {
+                     opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                         //Definir las validaciones a realizar
+                        ValidateIssuer = false,
+                        ValidateAudience = false,
+                        ValidateLifetime = false,
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = claveDificilEncriptada
+                     };
+                });
+
+            #endregion
 
 
             var app = builder.Build();
+
+            //Habilitar la autorizacion y autenticacion en la app.
+            //para que los usuarios puedan acceder a los recursos protegidos
+            //ORDEN: 1- Autenticacion 2- Autorizacion 3- Ruteo
+            app.UseAuthorization();
+            app.UseAuthorization();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -75,8 +108,6 @@ namespace Papeleria.WebApi
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
 
 
             app.MapControllers();

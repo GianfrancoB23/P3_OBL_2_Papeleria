@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Usuarios;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios;
+using SistemaDocentes.Api.UtilidadesJwt;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,36 +12,32 @@ namespace Papeleria.WebApi.Controllers
     [ApiController]
     public class UsuariosController : ControllerBase
     {
-        // GET: api/<UsuariosController>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        private ILogin _login;
+        public UsuariosController(ILogin login)
         {
-            return new string[] { "value1", "value2" };
+            _login = login;
         }
-
-        // GET api/<UsuariosController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        // GET: api/<UsuarioController>
+        [AllowAnonymous]
+        [HttpPost("login")]
+        //xxxxx
+        public IActionResult Login(UsuarioDTO usr)
         {
-            return "value";
-        }
+            try
+            {
+                var rol = _login.Ejecutar(usr.Email, usr.Contrasenia);
+                if (string.IsNullOrWhiteSpace(rol))
+                {
+                    return Unauthorized("Credenciales incorrectas");
+                }
+                string token = ManejadorJwt.GenerarToken(usr.Email, rol);
+                return Ok(new { Token = token, Rol = rol, Email = usr.Email });
+            }
+            catch (Exception ex)
+            {
+                return Unauthorized(new { Error = "Credenciales incorrectas" });
+            }
 
-        // POST api/<UsuariosController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<UsuariosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<UsuariosController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

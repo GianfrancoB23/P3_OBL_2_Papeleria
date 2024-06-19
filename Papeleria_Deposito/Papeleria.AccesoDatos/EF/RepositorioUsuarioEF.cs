@@ -124,20 +124,19 @@ namespace Papeleria.AccesoDatos.EF
         {
             try
             {
-                Usuario usu = GetUsuarioPorEmail(email);
-                if (usu != null)
+                var usuarios = _db.Usuarios.ToList();
+                var usr = _db.Usuarios.AsEnumerable()
+                    .Where(u => u.Email.Direccion.Equals(email) && u.Contrasenia.Valor.Equals(contrasenia))
+                    .SingleOrDefault();
+                if (usr == null)
                 {
-                    if (usu.Email.Direccion == email && usu.Contrasenia.Valor == contrasenia)
-                    {
-                        return usu;
-                    }
+                    throw new UsuarioNoValidoExcepcion("Usuario o contraseña incorrectos");
                 }
-                return null;
-
+                return usr;
             }
             catch (UsuarioNoValidoExcepcion ex)
             {
-                throw new UsuarioNoValidoExcepcion("");
+                throw new UsuarioNoValidoExcepcion(ex.Message);
             }
         }
 

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios
 {
-    internal interface ILogin
+    public interface ILogin
     {
+        public string Ejecutar(string email, string pwd);
     }
 }
