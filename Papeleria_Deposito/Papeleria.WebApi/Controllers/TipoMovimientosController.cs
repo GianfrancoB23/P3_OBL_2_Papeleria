@@ -150,7 +150,7 @@ namespace Papeleria.WebApi.Controllers
             try
             {
                 if (_cuBuscarMovimiento.ExisteTipoMovimientoEnMovimientoByID(id))
-                    throw new MovimientoStockNoValidoException("Existe un MovimientoStock que esta utilizando este TipoMovimiento.");
+                    return BadRequest("Existe un MovimientoStock que esta utilizando este TipoMovimiento.");
                 else
                     _cuUpdateTipoMovimiento.Ejecutar(id, tipMov);
                     return Ok(tipMov);
@@ -177,7 +177,7 @@ namespace Papeleria.WebApi.Controllers
             try
             {
                 if (_cuBuscarMovimiento.ExisteTipoMovimientoEnMovimientoByID(id))
-                    throw new MovimientoStockNoValidoException("Existe un MovimientoStock que esta utilizando este TipoMovimiento.");
+                    return BadRequest("Existe un MovimientoStock que esta utilizando este TipoMovimiento.");
                 else
                     _cuBorrarTipoMov.Ejecutar(id);
                     return Ok();
