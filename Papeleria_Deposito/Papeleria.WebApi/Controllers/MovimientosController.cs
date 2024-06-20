@@ -208,7 +208,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
         // GET api/<Movimientos>/resumen
-        [Authorize]
+        //[Authorize]
         [HttpGet("resumen")]
         public ActionResult<object> ObtenerResumenMovimientosPorAnioYTipoMovimiento()
         {

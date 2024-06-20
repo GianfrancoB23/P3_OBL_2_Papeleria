@@ -161,18 +161,27 @@ namespace Papeleria.AccesoDatos.EF
                     .Select(group => new
                     {
                         Anio = group.Key.Year,
-                        TipoMovimiento = group.Key.TipoMovimiento,
-                        CantidadMovida = group.Sum(mov => mov.CtdUnidadesXMovimiento)
+                        Detalles = group.Select(g => new
+                        {
+                            Tipo = g.Movimiento.Nombre,
+                            Cantidad = group.Count() // Contar la cantidad de filas por tipo de movimiento
+                        }),
+                        TotalAnio = group.Count() // Contar el total de filas por año
                     })
                     .OrderBy(res => res.Anio)
-                    .ThenBy(res => res.TipoMovimiento)
+                    .ThenBy(res => res.Detalles.Select(det => det.Tipo))
                     .ToList();
 
-                return resumen;
+                return resumen.Select(r => new
+                {
+                    Año = r.Anio,
+                    Detalles = r.Detalles.Select(det => $"Tipo: \"{det.Tipo}\" - Cantidad: {det.Cantidad}"),
+                    TotalAnio = r.TotalAnio
+                });
             }
             catch (Exception ex)
             {
-                throw new MovimientoStockNoValidoException("Error al obtener el resumen de movimientos por año y tipo de movimiento", ex);
+                throw new MovimientoStockNoValidoException("Error al obtener el resumen de movimientos por año y tipo de movimiento");
             }
         }
 
