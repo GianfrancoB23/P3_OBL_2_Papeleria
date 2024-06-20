@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Papeleria.MVC.Models.ArticuloModel>
+
+@{
+    ViewData["Title"] = "Consulta2";
+}
+<p>
+    @ViewBag.Error
+</p>
+<h1>Consulta B</h1>
+
+<p>
+    Dado un rango de fechas, seleccionar los artículos que hayan tenido movimientos (al
+    menos uno) entre esas fechas inclusive.
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Codigo Proveedor
+            </th>
+            <th>
+                Nombre Articulo
+            </th>
+            <th>
+                Descripcion
+            </th>
+            <th>
+                $ Venta al publico
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.codigoProveedor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreArticulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioVP)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
