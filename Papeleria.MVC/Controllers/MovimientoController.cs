@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using NuGet.Common;
 using Papeleria.MVC.Models;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -25,7 +26,7 @@ namespace Papeleria.MVC.Controllers
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
         public ActionResult Index()
-        {            
+        {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
@@ -35,16 +36,25 @@ namespace Papeleria.MVC.Controllers
                     var body = response.Content.ReadAsStringAsync().Result;
                     var objetos = JsonSerializer.Deserialize<IEnumerable<Models.MovimientosModel>>(body);
                     return View(objetos);
-                } else
+                }
+                else
                 {
                     SetError(response);
-                    return View();
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Autorizar", "Login");
+                    }
+                    else
+                    {
+
+                        return View();
+                    }
                 }
             }
             catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
-                return View();                
+                return View();
             }
         }
 
@@ -54,7 +64,7 @@ namespace Papeleria.MVC.Controllers
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
-                HttpResponseMessage response = _httpClient.GetAsync("Movimientos/"+id).Result;
+                HttpResponseMessage response = _httpClient.GetAsync("Movimientos/" + id).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var body = response.Content.ReadAsStringAsync().Result;
@@ -64,7 +74,14 @@ namespace Papeleria.MVC.Controllers
                 else
                 {
                     SetError(response);
-                    return View();
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Autorizar", "Login");
+                    }
+                    else
+                    {
+                        return View();
+                    }
                 }
             }
             catch (Exception ex)
@@ -78,12 +95,16 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Create()
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null)
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             try
             {
                 HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
                 HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
                 IEnumerable<ArticuloModel> articulos = null;
-                IEnumerable<TipoMovimientoModel> tiposMovimientos = null;  
+                IEnumerable<TipoMovimientoModel> tiposMovimientos = null;
                 if (articulosRequest.IsSuccessStatusCode)
                 {
                     var body = articulosRequest.Content.ReadAsStringAsync().Result;
@@ -95,6 +116,10 @@ namespace Papeleria.MVC.Controllers
                     var body = tipoMovRequest.Content.ReadAsStringAsync().Result;
                     var objetos = JsonSerializer.Deserialize<IEnumerable<Models.TipoMovimientoModel>>(body);
                     tiposMovimientos = objetos;
+                }
+                else
+                {
+                    ViewBag.Error = "No se encontraron tipos de movimiento";
                 }
                 ViewBag.articulos = articulos;
                 ViewBag.tiposMovimientos = tiposMovimientos;
@@ -146,7 +171,14 @@ namespace Papeleria.MVC.Controllers
                 else
                 {
                     SetError(respuesta);
-                    return View();
+                    if (respuesta.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Autorizar", "Login");
+                    }
+                    else
+                    {
+                        return View();
+                    }
                 }
             }
             catch (Exception ex)
@@ -155,53 +187,6 @@ namespace Papeleria.MVC.Controllers
                 return View();
             }
         }
-
-        // GET: MovimientoController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
-            return View();
-        }
-
-        // POST: MovimientoController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: MovimientoController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
-            return View();
-        }
-
-        // POST: MovimientoController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
         private void SetError(HttpResponseMessage respuesta)
         {
             var contenidoError = respuesta.Content.ReadAsStringAsync().Result;
