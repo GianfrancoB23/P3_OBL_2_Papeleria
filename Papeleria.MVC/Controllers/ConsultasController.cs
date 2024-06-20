@@ -52,9 +52,10 @@ namespace Papeleria.MVC.Controllers
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             TempData["ResultadoBuscarMovimientos"] = "";
+            DateTime fechaNull = new DateTime(01, 01, 0001);
             try
             {
-                if (!string.IsNullOrEmpty(tipoMovimientoNombre) && ArticuloID != null)
+                if (!string.IsNullOrEmpty(tipoMovimientoNombre) && ArticuloID != 0)
                 {
                     HttpResponseMessage movimientossRequest = _httpClient.GetAsync($"Movimientos/{ArticuloID}/{tipoMovimientoNombre}").Result;
                     IEnumerable<MovimientosModel> movimientos = null;
@@ -70,11 +71,22 @@ namespace Papeleria.MVC.Controllers
                     }
                     return View("Consulta1", movimientos);
                 }
-                //else
-                //{
-                //    TempData["ResultadoBuscarMovimientos"] = "Parametros invalidos.";
-                //    return RedirectToAction("Index", "Consultas");
-                //}
+                if (fechaIni!=fechaNull && fechaFin!=fechaNull)
+                {
+                    HttpResponseMessage movimientossRequest = _httpClient.GetAsync($"Movimientos/articulos-por-fechas?fechaIni={fechaIni:s}&fechaFin={fechaFin:s}").Result;
+                    IEnumerable<ArticuloModel> articulos = null;
+
+                    var body = movimientossRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.ArticuloModel>>(body);
+                    articulos = objetos;
+
+                    if (articulos.Count() == 0)
+                    {
+                        TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia para ese movimiento.";
+                        return RedirectToAction("Index", "Consultas");
+                    }
+                    return View("Consulta2", articulos);
+                }
                 TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia. Verifique los parametros ingresados.";
                 return RedirectToAction("Index", "Consultas");
             }
