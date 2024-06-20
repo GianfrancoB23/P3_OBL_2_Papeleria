@@ -112,7 +112,7 @@ namespace Papeleria.WebApi.Controllers
 
         }
 
-        // PUT api/<Movimientos>/5
+       /* // PUT api/<Movimientos>/5
         [Authorize]
         [HttpPut("{id}")]
         public ActionResult<MovimientoStockDTO> Put(int id, [FromBody] MovimientoStockDTO mov)
@@ -150,7 +150,7 @@ namespace Papeleria.WebApi.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-        }
+        }*/
 
         //TODO Verificar autorizacion en API
         // GET api/<Movimientos>/5/entradas
