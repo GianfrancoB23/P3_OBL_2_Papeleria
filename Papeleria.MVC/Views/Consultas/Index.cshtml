@@ -38,5 +38,26 @@
             </div>
         </form>
         <hr />
+
+
+        <h4>
+            <strong>B)</strong> DADO UN RANGO DE FECHAS, SELECCIONAR LOS ARTÍCULOS QUE HAYAN TENIDO MOVIMIENTOS (AL MENOS UNO) ENTRE ESAS FECHAS INCLUSIVE.
+        </h4>
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.fecHorMovRealizado">Fecha Inicio</label>
+                <input type="date" asp-for="@Model.fecHorMovRealizado" class="form-control date" />
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.fecHorMovRealizado">Fecha Final</label>
+                <input type="date" asp-for="@Model.fecHorMovRealizado" class="form-control date" />
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Consultar" class="btn btn-primary col-md-12" />
+            </div>
+        </form>
+        <hr />
     </div>
 </div>

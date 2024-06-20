@@ -46,7 +46,7 @@ namespace Papeleria.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(int ArticuloID, string tipoMovimientoNombre)
+        public ActionResult Index(int ArticuloID, string tipoMovimientoNombre, DateTime fechaIni, DateTime fechaFin)
         {
             TempData["ResultadoBuscarMovimientos"] = "";
             try
