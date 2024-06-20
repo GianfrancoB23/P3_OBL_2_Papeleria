@@ -4,6 +4,7 @@ using Papeleria.LogicaAplicacion.InterfacesCasoDeUsoGeneral;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos;
 using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.Excepciones.Articulo;
+using Papeleria.LogicaNegocio.Excepciones.MovimientoStock;
 using Papeleria.LogicaNegocio.Excepciones.Usuario;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 using System;
@@ -50,6 +51,17 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
                 throw new Exception("Articulo no encontrado con el ID especificado"); // Handler de exception
             }
             var ret = MovimientoStockMappers.ToDto(movimiento);
+            return ret;
+        }
+
+        public IEnumerable<MovimientoStockDTO> GetMovimientosByIDArticuloYTipoMov(int idArticulo, string tipoMovimiento)
+        {
+            var movimientos = _repoMov.GetAllByIDArticulo_y_TipoMovimiento(idArticulo, tipoMovimiento);
+            if (movimientos == null)
+            {
+                throw new MovimientoStockNuloException("No se ha encontrado movimientos con el ID de articulo y tipo de movimiento ingresado."); // Handler de exception
+            }
+            var ret = MovimientoStockMappers.FromLista(movimientos);
             return ret;
         }
     }

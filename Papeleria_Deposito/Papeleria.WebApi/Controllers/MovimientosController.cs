@@ -145,5 +145,30 @@ namespace Papeleria.WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        // GET api/<Movimientos>/5/entradas
+        [HttpGet("{id}/{mov}")]
+        public ActionResult<MovimientoStockDTO> GetByIdYTipoMov(int id, string mov)
+        {
+            if (id == null)
+                return BadRequest("Debe indicar el ID del Aritculo a buscar en MovimientoStock.");
+            if (mov == null)
+                return BadRequest("Debe indicar el Tipo Movimiento a buscar en MovimientoStock.");
+            try
+            {
+                var movimientosDto = _cuGetMovimiento.GetMovimientosByIDArticuloYTipoMov(id, mov);
+                if (movimientosDto.Count() == 0)
+                    return NotFound("No se encontro movimiento con esa ID de Articulo y Tipo Movimiento.");
+                return Ok(movimientosDto);
+            }
+            catch (ArticuloNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

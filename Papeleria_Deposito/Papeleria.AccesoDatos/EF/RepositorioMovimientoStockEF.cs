@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Papeleria.AccesoDatos.EF
 {
@@ -81,9 +82,36 @@ namespace Papeleria.AccesoDatos.EF
             return movimientos;
         }
 
+        //A) Dados un id de artículo y un tipo de movimiento, todos los movimientos de ese tipo
+        //realizados sobre ese artículo.Deberán estar ordenados descendentemente por fecha y en
+        //forma ascendente por la cantidad de unidades involucradas en el movimiento Se deberá
+        //mostrar todos los datos del movimiento, incluyendo todos los datos de su tipo.
+        public IEnumerable<MovimientoStock> GetAllByIDArticulo_y_TipoMovimiento(int idArticulo, string tipoMovimiento)
+        {
+            if (idArticulo == null)
+                throw new MovimientoStockNoValidoException("El ID del articulo por el cual quiere filtrar el movimiento de stock no puede ser nulo.");
+            if (tipoMovimiento == null)
+                throw new MovimientoStockNoValidoException("El tipo de movimiento por el cual quiere filtrar el movimiento de stock no puede ser nulo.");
+            try
+            {
+                var movimientos = _db.MovimientoStocks.Where(mov => mov.Articulo.ID == idArticulo && mov.Movimiento.Nombre.ToLower().Equals(tipoMovimiento.ToLower()))
+                    .Include(mov => mov.Articulo)
+                    .Include(mov => mov.UsuarioRealizaMovimiento)
+                    .Include(mov => mov.Movimiento)
+                    .OrderByDescending(mov => mov.FecHorMovRealizado)
+                    .ThenBy(mov => mov.CtdUnidadesXMovimiento)
+                    .ToList();
+                return movimientos;
+            }
+            catch (Exception ex)
+            {
+                throw new MovimientoStockNoValidoException(ex.Message);
+            }
+        }
+
         public MovimientoStock GetById(int id)
         {
-            if(id==null)
+            if (id == null)
                 throw new MovimientoStockNuloException("No puede ser nulo el ID del objeto a buscar.");
             try
             {
@@ -94,7 +122,7 @@ namespace Papeleria.AccesoDatos.EF
             {
                 throw new MovimientoStockNoValidoException(ex.Message);
             }
-            
+
         }
 
         public IEnumerable<MovimientoStock> GetObjectsByID(List<int> ids)
@@ -124,7 +152,7 @@ namespace Papeleria.AccesoDatos.EF
 
         public void Remove(MovimientoStock obj)
         {
-            if(obj == null)
+            if (obj == null)
                 throw new MovimientoStockNuloException("No puede ser nulo el OBJETO a remover.");
             try
             {
@@ -135,7 +163,7 @@ namespace Papeleria.AccesoDatos.EF
             {
                 throw new MovimientoStockNoValidoException(ex.Message);
             }
-            
+
         }
 
         public void Update(int id, MovimientoStock obj)

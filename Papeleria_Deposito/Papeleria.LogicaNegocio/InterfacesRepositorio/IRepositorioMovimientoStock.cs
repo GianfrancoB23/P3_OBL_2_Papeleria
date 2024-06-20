@@ -13,5 +13,6 @@ namespace Papeleria.LogicaNegocio.InterfacesRepositorio
         public bool EstaEnUsoTipoMovimientoByID(int id);
         public bool EstaEnUsoTipoMovimientoByNombre(string nombre);
         public int CtdMovimientos();
+        public IEnumerable<MovimientoStock> GetAllByIDArticulo_y_TipoMovimiento(int idArticulo, string tipoMovimiento);
     }
 }
