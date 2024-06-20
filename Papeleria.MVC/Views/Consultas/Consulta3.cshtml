@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MovimientoConsultaModel>
+
+@{
+    ViewBag.Title = "Resumen de Movimientos";
+}
+
+<h2>Resumen de Movimientos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Año</th>
+            <th>Tipo de Movimiento</th>
+            <th>Cantidad Movida</th>
+            <th>Total movido en año</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var anio in Model)
+        {
+            <tr>
+                <td>@anio.anio</td>
+                <td colspan="2">
+                    <table class="table table-bordered">
+                        @foreach (var mov in anio.movimientos)
+                        {
+                            <tr>
+                                <td>@mov.tipoMovimiento</td>
+                                <td>@mov.cantidadMovida</td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+                <td>@anio.totalCantidadMovida</td>
+            </tr>
+        }
+    </tbody>
+</table>

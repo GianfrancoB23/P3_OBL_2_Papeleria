@@ -152,36 +152,57 @@ namespace Papeleria.AccesoDatos.EF
             throw new NotImplementedException();
         }
 
+        /* public IEnumerable<object> ObtenerResumenMovimientosPorAnioYTipoMovimiento()
+         {
+             try
+             {
+                 var resumen = _db.MovimientoStocks
+                     .GroupBy(mov => new { Year = mov.FecHorMovRealizado.Year, TipoMovimiento = mov.Movimiento.Nombre })
+                     .Select(group => new
+                     {
+                         Anio = group.Key.Year,
+                         Detalles = group.Select(g => new
+                         {
+                             Tipo = g.Movimiento.Nombre,
+                             Cantidad = group.Count() // Contar la cantidad de filas por tipo de movimiento
+                         }),
+                         TotalAnio = group.Count() // Contar el total de filas por año
+                     })
+                     .OrderBy(res => res.Anio)
+                     .ThenBy(res => res.Detalles.Select(det => det.Tipo))
+                     .ToList();
+
+                 return resumen.Select(r => new
+                 {
+                     Año = r.Anio,
+                     Detalles = r.Detalles.Select(det => $"Tipo: \"{det.Tipo}\" - Cantidad: {det.Cantidad}"),
+                     TotalAnio = r.TotalAnio
+                 });
+             }
+             catch (Exception ex)
+             {
+                 throw new MovimientoStockNoValidoException("Error al obtener el resumen de movimientos por año y tipo de movimiento");
+             }
+         }*/
         public IEnumerable<object> ObtenerResumenMovimientosPorAnioYTipoMovimiento()
         {
             try
             {
                 var resumen = _db.MovimientoStocks
-                    .GroupBy(mov => new { Year = mov.FecHorMovRealizado.Year, TipoMovimiento = mov.Movimiento.Nombre })
+                    .GroupBy(mov => mov.FecHorMovRealizado.Year)
                     .Select(group => new
                     {
-                        Anio = group.Key.Year,
-                        Detalles = group.Select(g => new
-                        {
-                            Tipo = g.Movimiento.Nombre,
-                            Cantidad = group.Count() // Contar la cantidad de filas por tipo de movimiento
-                        }),
-                        TotalAnio = group.Count() // Contar el total de filas por año
+                        Anio = group.Key,
+                        Movimientos = group.GroupBy(mov => mov.Movimiento.Nombre).Select(tipoGroup => new {TipoMovimiento=tipoGroup.Key, CantidadMovida=tipoGroup.Sum(mov=>mov.CtdUnidadesXMovimiento)}).OrderBy(tipo => tipo.TipoMovimiento).ToList()
                     })
                     .OrderBy(res => res.Anio)
-                    .ThenBy(res => res.Detalles.Select(det => det.Tipo))
                     .ToList();
 
-                return resumen.Select(r => new
-                {
-                    Año = r.Anio,
-                    Detalles = r.Detalles.Select(det => $"Tipo: \"{det.Tipo}\" - Cantidad: {det.Cantidad}"),
-                    TotalAnio = r.TotalAnio
-                });
+                return resumen;
             }
             catch (Exception ex)
             {
-                throw new MovimientoStockNoValidoException("Error al obtener el resumen de movimientos por año y tipo de movimiento");
+                throw new MovimientoStockNoValidoException("Error al obtener el resumen de movimientos por año y tipo de movimiento", ex);
             }
         }
 

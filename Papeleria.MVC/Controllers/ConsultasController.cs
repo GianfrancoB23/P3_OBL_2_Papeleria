@@ -79,7 +79,7 @@ namespace Papeleria.MVC.Controllers
                     }
                     return View("Consulta1", movimientos);
                 }
-                if (fechaIni!=fechaNull && fechaFin!=fechaNull)
+                if (fechaIni != fechaNull && fechaFin != fechaNull)
                 {
                     HttpResponseMessage movimientossRequest = _httpClient.GetAsync($"Movimientos/articulos-por-fechas?fechaIni={fechaIni:s}&fechaFin={fechaFin:s}").Result;
                     IEnumerable<ArticuloModel> articulos = null;
@@ -103,6 +103,33 @@ namespace Papeleria.MVC.Controllers
                 TempData["ResultadoBuscarMovimientos"] = e.Message;
                 return RedirectToAction("Index", "Consultas");
             }
+        }
+        public ActionResult Consultar()
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            HttpResponseMessage movimientosRequest = _httpClient.GetAsync($"Movimientos/resumen").Result;
+
+            IEnumerable<MovimientoConsultaModel> respuesta = null;
+
+            var body = movimientosRequest.Content.ReadAsStringAsync().Result;
+            var objetos = JsonSerializer.Deserialize<IEnumerable<MovimientoConsultaModel>>(body);
+            respuesta = objetos;
+
+            if (respuesta.Count() == 0)
+            {
+                TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia para ese movimiento.";
+                return RedirectToAction("Index", "Consultas");
+            }
+
+            foreach (var movimiento in respuesta)
+            {
+                movimiento.totalCantidadMovida = movimiento.movimientos.Sum(m => m.cantidadMovida);
+            }
+            return View("Consulta3", respuesta);
         }
 
         // GET: ConsultasController/Details/5
