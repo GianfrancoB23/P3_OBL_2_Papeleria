@@ -194,8 +194,30 @@ namespace Papeleria.WebApi.Controllers
             {
                 var articulosDTO = _cuGetMovimiento.GetArticulosByRangoFecha(fechaIni,fechaFin);
                 if (articulosDTO.Count() == 0)
-                    return NotFound("No se articulo en ese periodo de fechas.");
+                    return NotFound("No se encontraron articulos en ese periodo de fechas.");
                 return Ok(articulosDTO);
+            }
+            catch (ArticuloNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        // GET api/<Movimientos>/resumen
+        [Authorize]
+        [HttpGet("resumen")]
+        public ActionResult<object> ObtenerResumenMovimientosPorAnioYTipoMovimiento()
+        {
+            try
+            {
+                var resumen = _cuGetMovimiento.ObtenerResumenMovimientosPorAnioYTipoMovimiento();
+                if (resumen.Count() == 0)
+                    return NotFound("No se articulo en ese periodo de fechas.");
+                return Ok(resumen);
             }
             catch (ArticuloNoValidoException ex)
             {

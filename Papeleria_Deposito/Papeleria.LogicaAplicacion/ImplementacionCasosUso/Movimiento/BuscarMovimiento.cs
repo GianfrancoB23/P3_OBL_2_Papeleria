@@ -77,5 +77,15 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
             var ret = MovimientoStockMappers.FromLista(movimientos);
             return ret;
         }
+
+        public IEnumerable<object> ObtenerResumenMovimientosPorAnioYTipoMovimiento()
+        {
+            var resumen = _repoMov.ObtenerResumenMovimientosPorAnioYTipoMovimiento();
+            if (resumen == null)
+            {
+                throw new MovimientoStockNuloException("No se ha encontrado movimientos."); // Handler de exception
+            }
+            return resumen;
+        }
     }
 }

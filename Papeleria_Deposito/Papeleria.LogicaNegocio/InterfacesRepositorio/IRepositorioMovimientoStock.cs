@@ -16,5 +16,6 @@ namespace Papeleria.LogicaNegocio.InterfacesRepositorio
         public int CtdMovimientos();
         public IEnumerable<MovimientoStock> GetAllByIDArticulo_y_TipoMovimiento(int idArticulo, string tipoMovimiento);
         public IEnumerable<Articulo> GetByRangoFechas(DateTime fecha1, DateTime fecha2);
+        public IEnumerable<object> ObtenerResumenMovimientosPorAnioYTipoMovimiento();
     }
 }

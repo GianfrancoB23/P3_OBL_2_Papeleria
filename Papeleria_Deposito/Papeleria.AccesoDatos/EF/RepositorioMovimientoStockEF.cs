@@ -152,6 +152,30 @@ namespace Papeleria.AccesoDatos.EF
             throw new NotImplementedException();
         }
 
+        public IEnumerable<object> ObtenerResumenMovimientosPorAnioYTipoMovimiento()
+        {
+            try
+            {
+                var resumen = _db.MovimientoStocks
+                    .GroupBy(mov => new { Year = mov.FecHorMovRealizado.Year, TipoMovimiento = mov.Movimiento.Nombre })
+                    .Select(group => new
+                    {
+                        Anio = group.Key.Year,
+                        TipoMovimiento = group.Key.TipoMovimiento,
+                        CantidadMovida = group.Sum(mov => mov.CtdUnidadesXMovimiento)
+                    })
+                    .OrderBy(res => res.Anio)
+                    .ThenBy(res => res.TipoMovimiento)
+                    .ToList();
+
+                return resumen;
+            }
+            catch (Exception ex)
+            {
+                throw new MovimientoStockNoValidoException("Error al obtener el resumen de movimientos por año y tipo de movimiento", ex);
+            }
+        }
+
         public void Remove(int id)
         {
             if (id == null)

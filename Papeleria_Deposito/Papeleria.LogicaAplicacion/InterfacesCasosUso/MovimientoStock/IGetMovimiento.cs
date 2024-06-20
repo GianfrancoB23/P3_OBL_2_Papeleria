@@ -17,5 +17,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos
         public IEnumerable<MovimientoStockDTO> GetAll();
         public IEnumerable<MovimientoStockDTO> GetMovimientosByIDArticuloYTipoMov(int idArticulo, string tipoMovimiento);
         public IEnumerable<ArticuloDTO> GetArticulosByRangoFecha(DateTime fechaIni, DateTime fechaFin);
+        public IEnumerable<object> ObtenerResumenMovimientosPorAnioYTipoMovimiento();
     }
 }
