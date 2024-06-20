@@ -123,7 +123,7 @@ namespace Papeleria.AccesoDatos.EF
             }
             else
             {
-                throw new TipoMovimientoNuloException("El movimiento de stock no existe.");
+                throw new TipoMovimientoNuloException("El ID ingresado no pertenece a ningun TipoMovimiento");
             }
         }
     }

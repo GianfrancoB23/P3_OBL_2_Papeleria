@@ -7,6 +7,7 @@ using NuGet.Common;
 using Papeleria.AccesoDatos.EF;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Articulos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento;
+using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimientos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.TipoMovimientos;
 using Papeleria.LogicaAplicacion.ImplementacionCasosUso.Usuarios;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Articulos;
@@ -71,6 +72,7 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IBorrarMovimiento, BorrarMovimiento>();
             builder.Services.AddScoped<IGetMovimiento, BuscarMovimiento>();
             builder.Services.AddScoped<IUpdateMovimiento, UpdateMovimiento>();
+            builder.Services.AddScoped<IFiltrarMovimiento, FiltrarMovimiento>();
 
 
             //Configuración de la base de datos

@@ -26,6 +26,9 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimientos
             }
             try
             {
+                var ctdMov = _repoMovimiento.CtdMovimientos();
+                if(ctdMov==0)
+                    return false;
                 var mov = _repoMovimiento.EstaEnUsoTipoMovimientoByID(id);
                 return mov;
             }

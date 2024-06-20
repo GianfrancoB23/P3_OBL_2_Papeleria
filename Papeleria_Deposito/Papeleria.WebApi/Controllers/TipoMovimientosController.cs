@@ -31,7 +31,7 @@ namespace Papeleria.WebApi.Controllers
         private IFiltrarMovimiento _cuBuscarMovimiento;
 
         public TipoMovimientosController(IRepositorioTipoMovimiento repoTipoMov, IAltaTiposMovimientos cuAltaTipoMov, IBorrarTipoMovimiento cuBorrarTipoMov,
-            IGetAllTipoMovimiento cuGetAllTipoMov, IGetTipoMovimiento cuGetTipoMovimiento, IUpdateTipoMovimiento cuUpdateTipoMovimiento)
+            IGetAllTipoMovimiento cuGetAllTipoMov, IGetTipoMovimiento cuGetTipoMovimiento, IUpdateTipoMovimiento cuUpdateTipoMovimiento, IFiltrarMovimiento cuBuscarMovimiento)
         {
             _repoTipoMov = repoTipoMov;
             _cuAltaTipoMov = cuAltaTipoMov;
@@ -39,6 +39,7 @@ namespace Papeleria.WebApi.Controllers
             _cuGetAllTipoMov = cuGetAllTipoMov;
             _cuGetTipoMovimiento = cuGetTipoMovimiento;
             _cuUpdateTipoMovimiento = cuUpdateTipoMovimiento;
+            _cuBuscarMovimiento = cuBuscarMovimiento;
         }
 
         // GET: api/<TipoMovimientosController>
@@ -150,7 +151,7 @@ namespace Papeleria.WebApi.Controllers
         /// <param name="id">Proporciona el ID del objeto a modificar</param>
         /// <param name="tipMov">Proporciona el cuerpo del articulo que va a reemplazar al existente</param>
         /// <returns>200 - Articulo modificado correctamente | 400 - ID/Articulo nuevo invalido | 500 - Error en la DB / Excepcion particular</returns>
-        [HttpPut("{ID}")]
+        [HttpPut("{id}")]
         [AllowAnonymous]
         public ActionResult<TipoMovimientoDTO> Put(int id, TipoMovimientoDTO tipMov)
         {
@@ -178,7 +179,7 @@ namespace Papeleria.WebApi.Controllers
         /// </summary>
         /// <param name="id">Proporciona el ID del "Tipo Movimiento" a borrar</param>
         /// <returns>200 - Articulo borrado correctamente | 400 - ID Invalido o Articulo no valido | 500 - Error de la DB / Excepcion particular</returns>
-        [HttpDelete("{ID}")]
+        [HttpDelete("{id}")]
         [AllowAnonymous]
         public ActionResult<TipoMovimientoDTO> Delete(int id)
         {

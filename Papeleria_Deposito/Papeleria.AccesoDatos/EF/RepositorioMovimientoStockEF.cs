@@ -31,6 +31,11 @@ namespace Papeleria.AccesoDatos.EF
             }
         }
 
+        public int CtdMovimientos()
+        {
+            return _db.MovimientoStocks.Count();
+        }
+
         public bool EstaEnUsoTipoMovimientoByID(int id)
         {
             if (id == null)
