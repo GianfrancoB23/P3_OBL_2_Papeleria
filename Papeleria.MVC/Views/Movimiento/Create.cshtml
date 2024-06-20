@@ -2,9 +2,13 @@
 
 @{
     ViewData["Title"] = "Create";
+
 }
 
 <h1>Create</h1>
+<p>
+    @ViewBag.Error
+</p>
 
 <h4>MovimientosModel</h4>
 <hr />
@@ -13,8 +17,10 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="articuloID" class="control-label"></label>
-                <input asp-for="articuloID" class="form-control" />
+                <label asp-for="articuloID">Articulo</label>
+                <select asp-for="@Model.articuloID" asp-items="@(new SelectList(ViewBag.articulos, "id", "nombreArticulo"))" class="form-control">
+                    <option disabled selected>Seleccionar articulo</option>
+                </select>
                 <span asp-validation-for="articuloID" class="text-danger"></span>
             </div>
             <div class="form-group">

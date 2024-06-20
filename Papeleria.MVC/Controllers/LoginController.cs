@@ -50,6 +50,7 @@ namespace Papeleria.MVC.Controllers
                     }
                     HttpContext.Session.SetString("Token", token.Token);
                     HttpContext.Session.SetString("Rol", token.Rol);
+                    HttpContext.Session.SetInt32("UserId", token.UserId);
                     //HttpContext.Session.SetString("Email", token.Email);
                     //Agregar el token a las cabeceras de las peticiones, para que el servidor lo pueda validar
                     //No olvidar que el token debe ser enviado en todas las peticiones

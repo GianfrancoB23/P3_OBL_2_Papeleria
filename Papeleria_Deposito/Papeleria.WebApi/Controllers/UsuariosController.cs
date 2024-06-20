@@ -106,13 +106,17 @@ namespace Papeleria.WebApi.Controllers
         {
             try
             {
-                var rol = _login.Ejecutar(usr.Email, usr.Contrasenia);
+                var usuario = _login.Ejecutar(usr.Email, usr.Contrasenia);
+                //var usuario = _repo.Login(usr.Email, usr.Contrasenia);
+                var rol = usuario.GetType().Name;
+                var dto = UsuariosMappers.ToDto(usuario);
+
                 if (string.IsNullOrWhiteSpace(rol))
                 {
                     return Unauthorized("Credenciales incorrectas");
                 }
                 string token = ManejadorJwt.GenerarToken(usr.Email, rol);
-                return Ok(new { Token = token, Rol = rol, Email = usr.Email, userId = usr.Id });
+                return Ok(new { Token = token, Rol = rol, Email = dto.Email, userId = dto.Id });
             }
             catch (Exception ex)
             {

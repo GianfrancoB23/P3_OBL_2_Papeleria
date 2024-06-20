@@ -1,4 +1,5 @@
-﻿using Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios;
+﻿using Empresa.LogicaDeNegocio.Sistema;
+using Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,13 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Usuarios
         {
             _repoUsr = repoUsr;
         }
-        public string Ejecutar(string email, string pwd)
+        public Usuario Ejecutar(string email, string pwd)
         {
-            var usr = _repoUsr.Login(email, pwd);
+            return _repoUsr.Login(email, pwd);
+            /*var usr = _repoUsr.Login(email, pwd);
             if (usr == null)
                 return string.Empty;
-            return usr.GetType().Name;
+            return usr.GetType().Name;*/
         }
     }
 }

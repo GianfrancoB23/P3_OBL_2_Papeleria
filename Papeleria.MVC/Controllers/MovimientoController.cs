@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using Papeleria.MVC.Models;
 using System.Net.Http;
@@ -74,19 +75,24 @@ namespace Papeleria.MVC.Controllers
         {
             try
             {
-                /*HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
+                HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
                 HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
+                IEnumerable<ArticuloModel> articulos = null;
+                IEnumerable<TipoMovimientoModel> tiposMovimientos = null;  
                 if (articulosRequest.IsSuccessStatusCode)
                 {
                     var body = articulosRequest.Content.ReadAsStringAsync().Result;
-                    var objetos = JsonSerializer.Deserialize<Models.MovimientosModel>(body);
-                    return View(objetos);
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.ArticuloModel>>(body);
+                    articulos = objetos;
                 }
-                else
+                if (tipoMovRequest.IsSuccessStatusCode)
                 {
-                    SetError(response);
-                    return View();
-                }*/
+                    var body = tipoMovRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.TipoMovimientoModel>>(body);
+                    tiposMovimientos = objetos;
+                }
+                ViewBag.articulos = articulos;
+                ViewBag.tiposMovimientos = tiposMovimientos;
                 return View();
             }
             catch (Exception ex)

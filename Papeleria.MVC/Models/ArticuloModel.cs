@@ -3,11 +3,10 @@
     public class ArticuloModel
     {
 
-        public int Id { get; set; }
-        public long CodigoProveedor { get; set; }
-        public string NombreArticulo { get; set; }
-        public string Descripcion { get; set; }
-        public double PrecioVP { get; set; }
-        public int Stock { get; set; }
+        public int id { get; set; }
+        public long codigoProveedor { get; set; }
+        public string nombreArticulo { get; set; }
+        public string descripcion { get; set; }
+        public double precioVP { get; set; }
     }
 }

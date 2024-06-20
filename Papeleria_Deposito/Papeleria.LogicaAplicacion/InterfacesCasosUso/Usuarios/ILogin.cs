@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Empresa.LogicaDeNegocio.Sistema;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.Usuarios
 {
     public interface ILogin
     {
-        public string Ejecutar(string email, string pwd);
+        public Usuario Ejecutar(string email, string pwd);
     }
 }
