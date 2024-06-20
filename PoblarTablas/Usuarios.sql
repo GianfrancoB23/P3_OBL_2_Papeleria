@@ -1,8 +1,9 @@
 ﻿SET IDENTITY_INSERT [dbo].[Usuarios] ON;
 
 INSERT [dbo].[Usuarios] ([Id], [Tipo], [Contrasenia_Valor], [Email_Direccion], [NombreCompleto_Apellido], [NombreCompleto_Nombre]) VALUES 
-(3, 'EncargadoDeposito', N'Prueba123!', N'prueba@prueba.com', N'Apellido', N'Nombre'),
-(2, 'EncargadoDeposito', N'Prueba123!', N'gbonanni@email.com', N'Bonanni', N'Gianfranco'),
+(1, 'EncargadoDeposito', N'152535As!', N'gani@gmail.com', N'Moreno', N'Gabriel'),
+(2, 'EncargadoDeposito', N'Prueba123!', N'prueba@prueba.com', N'Apellido', N'Nombre'),
+(3, 'EncargadoDeposito', N'Prueba123!', N'gbonanni@email.com', N'Bonanni', N'Gianfranco'),
 (4, 'EncargadoDeposito', N'Prueba123!', N'mantunez@email.com', N'Antunez', N'Martin'),
 (5, 'EncargadoDeposito', N'Prueba123!', N'gmoreno@email.com', N'Moreno', N'Gabriel'),
 (6, 'EncargadoDeposito', N'Prueba123!', N'clugano@email.com', N'Lugano', N'Christian'),

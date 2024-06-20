@@ -55,7 +55,7 @@ namespace Papeleria.WebApi.Controllers
             try
             {
                 var movimientosDto = _cuGetMovimiento.GetAll();
-                var ordenada = movimientosDto.OrderBy(movimientos => movimientos.NombreArticulo);
+                var ordenada = movimientosDto.OrderByDescending(movimientos => movimientos.ID);
                 return Ok(ordenada);
             }
             catch (ArticuloNoValidoException ex)
@@ -69,7 +69,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
         // GET api/<Movimientos>/5
-        [HttpGet("{id}", Name = "GetMovByID")]
+        [HttpGet("{id}", Name = "GetMov ByID")]
         public ActionResult<MovimientoStockDTO> Get(int id)
         {
             try

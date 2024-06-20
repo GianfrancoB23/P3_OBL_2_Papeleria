@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
 using Papeleria.MVC.Models;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 
 namespace Papeleria.MVC.Controllers
@@ -93,6 +94,7 @@ namespace Papeleria.MVC.Controllers
                 }
                 ViewBag.articulos = articulos;
                 ViewBag.tiposMovimientos = tiposMovimientos;
+                ViewBag.usuario = HttpContext.Session.GetInt32("UserId");
                 return View();
             }
             catch (Exception ex)
@@ -109,7 +111,7 @@ namespace Papeleria.MVC.Controllers
         {
             try
             {
-                HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
+                /*HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
                 HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
                 IEnumerable<ArticuloModel> articulos = null;
                 IEnumerable<TipoMovimientoModel> tiposMovimientos = null;
@@ -126,11 +128,25 @@ namespace Papeleria.MVC.Controllers
                     tiposMovimientos = objetos;
                 }
                 ViewBag.articulos = articulos;
-                ViewBag.tiposMovimientos = tiposMovimientos;
-                return RedirectToAction(nameof(Index));
+                ViewBag.tiposMovimientos = tiposMovimientos;*/
+                var json = JsonSerializer.Serialize(movimiento);
+                var body = new StringContent(json, Encoding.UTF8, "application/json");
+                var respuesta = _httpClient.PostAsync("Movimientos", body).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var content = respuesta.Content.ReadAsStringAsync().Result;
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    SetError(respuesta);
+                    return View();
+                }
             }
-            catch
+            catch (Exception ex)
             {
+                ViewBag.Error = ex.Message;
                 return View();
             }
         }

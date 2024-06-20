@@ -31,6 +31,11 @@
                 <span asp-validation-for="articuloID" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="@Model.usuarioID" class="control-label" hidden>Cantidad de unidades</label>
+                <input asp-for="@Model.usuarioID" class="form-control" value="@ViewBag.usuario" hidden/>
+                <span asp-validation-for="@Model.usuarioID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ctdUnidadesXMovimiento" class="control-label">Cantidad de unidades</label>
                 <input asp-for="ctdUnidadesXMovimiento" class="form-control" />
                 <span asp-validation-for="ctdUnidadesXMovimiento" class="text-danger"></span>
