@@ -10,6 +10,9 @@ namespace Papeleria.MVC
             builder.Services.AddSession();
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            // Add HttpClient
+            builder.Services.AddHttpClient();
+            builder.Services.AddSession();
 
             var app = builder.Build();
 

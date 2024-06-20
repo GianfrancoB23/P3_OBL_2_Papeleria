@@ -5,7 +5,7 @@ using Papeleria.MVC.Models;
 using System.Text;
 using System.Text.Json;
 ///xxxxx
-namespace Colegio.PruebaApiHttpClient.Controllers
+namespace Papeleria.MVC.Controllers
 {
     public class LoginController : Controller
     {
@@ -35,7 +35,7 @@ namespace Colegio.PruebaApiHttpClient.Controllers
             {
                 var json = JsonSerializer.Serialize(loginModel);
                 var body = new StringContent(json, Encoding.UTF8, "application/json");
-                var respuesta = _httpClient.PostAsync("Usuario/Login", body).Result;
+                var respuesta = _httpClient.PostAsync("Usuario/login", body).Result;
                 if (respuesta.IsSuccessStatusCode)
                 {
                     var content = respuesta.Content.ReadAsStringAsync().Result;
