@@ -112,7 +112,7 @@ namespace Papeleria.WebApi.Controllers
                     return Unauthorized("Credenciales incorrectas");
                 }
                 string token = ManejadorJwt.GenerarToken(usr.Email, rol);
-                return Ok(new { Token = token, Rol = rol, Email = usr.Email });
+                return Ok(new { Token = token, Rol = rol, Email = usr.Email, userId = usr.Id });
             }
             catch (Exception ex)
             {

@@ -72,7 +72,28 @@ namespace Papeleria.MVC.Controllers
         // GET: MovimientoController/Create
         public ActionResult Create()
         {
-            return View();
+            try
+            {
+                /*HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
+                HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
+                if (articulosRequest.IsSuccessStatusCode)
+                {
+                    var body = articulosRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<Models.MovimientosModel>(body);
+                    return View(objetos);
+                }
+                else
+                {
+                    SetError(response);
+                    return View();
+                }*/
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
         }
 
         // POST: MovimientoController/Create
