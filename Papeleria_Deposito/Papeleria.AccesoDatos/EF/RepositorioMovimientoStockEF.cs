@@ -1,4 +1,5 @@
 ﻿using Empresa.LogicaDeNegocio.Entidades;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.Excepciones.Articulo;
@@ -15,7 +16,15 @@ namespace Papeleria.AccesoDatos.EF
     public class RepositorioMovimientoStockEF : IRepositorioMovimientoStock
     {
         private PapeleriaContext _db;
-        public RepositorioMovimientoStockEF(PapeleriaContext context) { _db = context; }
+        private IRepositorioTipoMovimiento _repoTM;
+        private IRepositorioArticulo _repoArt;
+        private IRepositorioUsuario _repoUsr;
+        public RepositorioMovimientoStockEF(PapeleriaContext context, IRepositorioTipoMovimiento repoTM, IRepositorioArticulo repoArt, IRepositorioUsuario repoUsr)
+        {
+            _db = context; _repoTM = repoTM;
+            _repoArt = repoArt;
+            _repoUsr = repoUsr;
+        }
         public void Add(MovimientoStock obj)
         {
             if (obj == null)
@@ -68,7 +77,8 @@ namespace Papeleria.AccesoDatos.EF
 
         public IEnumerable<MovimientoStock> GetAll()
         {
-            return _db.MovimientoStocks.ToList();
+            var movimientos = _db.MovimientoStocks.Include(a => a.Articulo).Include(b => b.Movimiento).Include(c => c.UsuarioRealizaMovimiento).ToList();
+            return movimientos;
         }
 
         public MovimientoStock GetById(int id)
@@ -77,7 +87,7 @@ namespace Papeleria.AccesoDatos.EF
                 throw new MovimientoStockNuloException("No puede ser nulo el ID del objeto a buscar.");
             try
             {
-                MovimientoStock? movStock = _db.MovimientoStocks.FirstOrDefault(art => art.ID == id);
+                MovimientoStock? movStock = _db.MovimientoStocks.Include(a => a.Articulo).Include(b => b.Movimiento).Include(c => c.UsuarioRealizaMovimiento).FirstOrDefault(art => art.ID == id);
                 return movStock;
             }
             catch (Exception ex)

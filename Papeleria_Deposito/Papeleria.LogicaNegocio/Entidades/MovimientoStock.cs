@@ -4,6 +4,7 @@ using Papeleria.LogicaNegocio.Excepciones.MovimientoStock;
 using Papeleria.LogicaNegocio.InterfacesEntidades;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;

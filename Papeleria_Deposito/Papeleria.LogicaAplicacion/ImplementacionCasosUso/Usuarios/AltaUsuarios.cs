@@ -36,7 +36,7 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Usuarios
             }
             else
             {
-                Usuario usuario = UsuariosMappers.FromDto(dto);
+                var usuario = UsuariosMappers.FromDto(dto);
                 _repoUsuarios.Add(usuario);
             }
         }
