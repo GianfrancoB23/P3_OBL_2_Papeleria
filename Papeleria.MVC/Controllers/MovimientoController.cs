@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json.Linq;
+using NuGet.Common;
 using Papeleria.MVC.Models;
 using System.Net.Http;
 using System.Text;
@@ -12,16 +13,17 @@ namespace Papeleria.MVC.Controllers
     public class MovimientoController : Controller
     {
         private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _url = "https://localhost:7148/api/";
         private readonly JsonSerializerOptions _jsonOptions
             = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         // GET: MovimientoStockController
-        public MovimientoController(HttpClient httpClient)
+        public MovimientoController(HttpClient httpClient, IHttpClientFactory httpClientFactory)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(_url);
-            _httpClient.DefaultRequestHeaders.Accept.Clear();
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            _httpClientFactory = httpClientFactory;
         }
         public ActionResult Index()
         {

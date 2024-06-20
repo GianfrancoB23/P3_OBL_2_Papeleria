@@ -108,7 +108,7 @@ namespace Papeleria.WebApi
             //Habilitar la autorizacion y autenticacion en la app.
             //para que los usuarios puedan acceder a los recursos protegidos
             //ORDEN: 1- Autenticacion 2- Autorizacion 3- Ruteo
-            app.UseAuthorization();
+            app.UseAuthentication();
             app.UseAuthorization();
 
             // Configure the HTTP request pipeline.

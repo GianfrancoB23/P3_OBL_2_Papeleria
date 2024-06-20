@@ -6,10 +6,12 @@ namespace Papeleria.MVC.Controllers
 {
     public class HomeController : Controller
     {
+        private HttpClient _httpClient;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(HttpClient httpClient, ILogger<HomeController> logger)
         {
+            _httpClient = httpClient;
             _logger = logger;
         }
 

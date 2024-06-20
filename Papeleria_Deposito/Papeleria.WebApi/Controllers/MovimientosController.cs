@@ -1,4 +1,5 @@
 ﻿using Empresa.LogicaDeNegocio.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Papeleria.AccesoDatos.EF;
 using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Articulos;
@@ -49,6 +50,7 @@ namespace Papeleria.WebApi.Controllers
             _cuGetMovimiento = getMovimiento;
         }
         // GET: api/<Movimientos>
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<MovimientoStockDTO>> Get()
         {
