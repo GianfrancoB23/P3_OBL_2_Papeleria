@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Papeleria.MVC.Models;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace Papeleria.MVC.Controllers
@@ -23,6 +24,7 @@ namespace Papeleria.MVC.Controllers
         // GET: ConsultasController
         public ActionResult Index()
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
             HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
             IEnumerable<ArticuloModel> articulos = null;
@@ -48,6 +50,7 @@ namespace Papeleria.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Index(int ArticuloID, string tipoMovimientoNombre, DateTime fechaIni, DateTime fechaFin)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             TempData["ResultadoBuscarMovimientos"] = "";
             try
             {
@@ -85,12 +88,14 @@ namespace Papeleria.MVC.Controllers
         // GET: ConsultasController/Details/5
         public ActionResult Details(int id)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             return View();
         }
 
         // GET: ConsultasController/Create
         public ActionResult Create()
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             return View();
         }
 
@@ -99,6 +104,7 @@ namespace Papeleria.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -112,6 +118,7 @@ namespace Papeleria.MVC.Controllers
         // GET: ConsultasController/Edit/5
         public ActionResult Edit(int id)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             return View();
         }
 
@@ -120,6 +127,7 @@ namespace Papeleria.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -133,6 +141,7 @@ namespace Papeleria.MVC.Controllers
         // GET: ConsultasController/Delete/5
         public ActionResult Delete(int id)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             return View();
         }
 
@@ -141,6 +150,7 @@ namespace Papeleria.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
                 return RedirectToAction(nameof(Index));
