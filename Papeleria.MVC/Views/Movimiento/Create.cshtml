@@ -1,0 +1,53 @@
+﻿@model Papeleria.MVC.Models.MovimientosModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>MovimientosModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="id" class="control-label"></label>
+                <input asp-for="id" class="form-control" />
+                <span asp-validation-for="id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="articuloID" class="control-label"></label>
+                <input asp-for="articuloID" class="form-control" />
+                <span asp-validation-for="articuloID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="tipoMovimientoID" class="control-label"></label>
+                <input asp-for="tipoMovimientoID" class="form-control" />
+                <span asp-validation-for="tipoMovimientoID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="usuarioID" class="control-label"></label>
+                <input asp-for="usuarioID" class="form-control" />
+                <span asp-validation-for="usuarioID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ctdUnidadesXMovimiento" class="control-label"></label>
+                <input asp-for="ctdUnidadesXMovimiento" class="form-control" />
+                <span asp-validation-for="ctdUnidadesXMovimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

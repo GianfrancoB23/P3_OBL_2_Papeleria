@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Papeleria.MVC.Models.MovimientosModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<p>
+    @ViewBag.Error
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.fecHorMovRealizado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreArticulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precioVP)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tipoMovimientoNombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ctdUnidadesXMovimiento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fecHorMovRealizado)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombreArticulo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.precioVP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tipoMovimientoNombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ctdUnidadesXMovimiento)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

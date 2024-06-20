@@ -34,6 +34,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="CerrarSesion">Logout</a>
                             </li>
                         }
+                        @if (Context.Session.GetInt32("Token") != null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Movimiento" asp-action="Index">Movimientos</a>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

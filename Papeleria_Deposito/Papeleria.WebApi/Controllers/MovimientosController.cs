@@ -74,7 +74,7 @@ namespace Papeleria.WebApi.Controllers
         {
             try
             {
-                var movimientosDto = _cuGetMovimiento.Get(id);
+                var movimientosDto = _cuGetMovimiento.GetByDTO(id);
                 return Ok(movimientosDto);
             }
             catch (ArticuloNoValidoException ex)
