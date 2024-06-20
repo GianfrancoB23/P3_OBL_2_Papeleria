@@ -33,9 +33,11 @@ namespace Papeleria.MVC.Controllers
         {
             try
             {
+                loginModel.Nombre = "";
+                loginModel.Apellido = "";
                 var json = JsonSerializer.Serialize(loginModel);
                 var body = new StringContent(json, Encoding.UTF8, "application/json");
-                var respuesta = _httpClient.PostAsync("Usuario/login", body).Result;
+                var respuesta = _httpClient.PostAsync("Usuarios/login", body).Result;
                 if (respuesta.IsSuccessStatusCode)
                 {
                     var content = respuesta.Content.ReadAsStringAsync().Result;
