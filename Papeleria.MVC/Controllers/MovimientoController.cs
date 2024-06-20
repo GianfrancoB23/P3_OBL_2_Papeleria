@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using NuGet.Common;
 using Papeleria.MVC.Models;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -13,7 +14,6 @@ namespace Papeleria.MVC.Controllers
     public class MovimientoController : Controller
     {
         private readonly HttpClient _httpClient;
-        private readonly IHttpClientFactory _httpClientFactory;
         private readonly string _url = "https://localhost:7148/api/";
         private readonly JsonSerializerOptions _jsonOptions
             = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
@@ -23,10 +23,10 @@ namespace Papeleria.MVC.Controllers
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri(_url);
             _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            _httpClientFactory = httpClientFactory;
         }
         public ActionResult Index()
-        {
+        {            
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
                 HttpResponseMessage response = _httpClient.GetAsync("Movimientos").Result;
@@ -51,6 +51,7 @@ namespace Papeleria.MVC.Controllers
         // GET: MovimientoController/Details/5
         public ActionResult Details(int id)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
                 HttpResponseMessage response = _httpClient.GetAsync("Movimientos/"+id).Result;
@@ -76,6 +77,7 @@ namespace Papeleria.MVC.Controllers
         // GET: MovimientoController/Create
         public ActionResult Create()
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
                 HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
@@ -111,9 +113,10 @@ namespace Papeleria.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(MovimientosModel movimiento)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
-                /*HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
+                HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
                 HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
                 IEnumerable<ArticuloModel> articulos = null;
                 IEnumerable<TipoMovimientoModel> tiposMovimientos = null;
@@ -130,10 +133,10 @@ namespace Papeleria.MVC.Controllers
                     tiposMovimientos = objetos;
                 }
                 ViewBag.articulos = articulos;
-                ViewBag.tiposMovimientos = tiposMovimientos;*/
+                ViewBag.tiposMovimientos = tiposMovimientos;
                 var json = JsonSerializer.Serialize(movimiento);
-                var body = new StringContent(json, Encoding.UTF8, "application/json");
-                var respuesta = _httpClient.PostAsync("Movimientos", body).Result;
+                var bodyJson = new StringContent(json, Encoding.UTF8, "application/json");
+                var respuesta = _httpClient.PostAsync("Movimientos", bodyJson).Result;
 
                 if (respuesta.IsSuccessStatusCode)
                 {
@@ -156,6 +159,7 @@ namespace Papeleria.MVC.Controllers
         // GET: MovimientoController/Edit/5
         public ActionResult Edit(int id)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             return View();
         }
 
@@ -164,6 +168,7 @@ namespace Papeleria.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -177,6 +182,7 @@ namespace Papeleria.MVC.Controllers
         // GET: MovimientoController/Delete/5
         public ActionResult Delete(int id)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             return View();
         }
 
@@ -185,6 +191,7 @@ namespace Papeleria.MVC.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
         {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
             try
             {
                 return RedirectToAction(nameof(Index));

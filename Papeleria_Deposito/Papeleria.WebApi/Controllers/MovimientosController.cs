@@ -71,6 +71,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
         // GET api/<Movimientos>/5
+        [Authorize]
         [HttpGet("{id}", Name = "GetMov ByID")]
         public ActionResult<MovimientoStockDTO> Get(int id)
         {
@@ -90,6 +91,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
         // POST api/<Movimientos>
+        [Authorize]
         [HttpPost]
         public ActionResult<MovimientoStockDTO> Post([FromBody] MovimientoStockDTO mov)
         {
@@ -111,6 +113,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
         // PUT api/<Movimientos>/5
+        [Authorize]
         [HttpPut("{id}")]
         public ActionResult<MovimientoStockDTO> Put(int id, [FromBody] MovimientoStockDTO mov)
         {
@@ -130,6 +133,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
         // DELETE api/<Movimientos>/5
+        [Authorize]
         [HttpDelete("{id}")]
         public ActionResult<MovimientoStockDTO> Delete(int id)
         {
@@ -150,6 +154,7 @@ namespace Papeleria.WebApi.Controllers
 
         //TODO Verificar autorizacion en API
         // GET api/<Movimientos>/5/entradas
+        [Authorize]
         [HttpGet("{id}/{mov}")]
         public ActionResult<MovimientoStockDTO> GetByIdYTipoMov(int id, string mov)
         {
@@ -175,6 +180,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
         // GET api/<Movimientos>/articulos-por-fechas
+        [Authorize]
         [HttpGet("articulos-por-fechas")]
         public ActionResult<ArticuloDTO> GetArticuloByRangoFechas(DateTime fechaIni, DateTime fechaFin)
         {
