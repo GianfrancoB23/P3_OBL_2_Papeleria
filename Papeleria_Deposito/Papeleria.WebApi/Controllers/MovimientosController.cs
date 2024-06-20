@@ -146,6 +146,7 @@ namespace Papeleria.WebApi.Controllers
             }
         }
 
+        //TODO Verificar autorizacion en API
         // GET api/<Movimientos>/5/entradas
         [HttpGet("{id}/{mov}")]
         public ActionResult<MovimientoStockDTO> GetByIdYTipoMov(int id, string mov)
