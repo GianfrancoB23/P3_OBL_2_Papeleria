@@ -28,6 +28,11 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Index()
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+
             try
             {
                 HttpResponseMessage response = _httpClient.GetAsync("Movimientos").Result;
@@ -62,6 +67,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Details(int id)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             try
             {
                 HttpResponseMessage response = _httpClient.GetAsync("Movimientos/" + id).Result;
@@ -74,7 +83,7 @@ namespace Papeleria.MVC.Controllers
                 else
                 {
                     SetError(response);
-                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    if (response.StatusCode == HttpStatusCode.Unauthorized || HttpContext.Session.GetString("Rol") == "Administrador")
                     {
                         return RedirectToAction("Autorizar", "Login");
                     }
@@ -95,7 +104,7 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Create()
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
-            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null)
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
             {
                 return RedirectToAction("Autorizar", "Login");
             }
@@ -139,6 +148,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Create(MovimientosModel movimiento)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             try
             {
                 HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
