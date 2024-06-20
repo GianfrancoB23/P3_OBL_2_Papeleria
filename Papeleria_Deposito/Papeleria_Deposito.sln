@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.LogicaNegocio", "Papeleria.LogicaNegocio\Papeleria.LogicaNegocio.csproj", "{953DF4C3-6BFE-421C-B9B6-3175DA7DC3B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Papeleria.LogicaNegocio", "Papeleria.LogicaNegocio\Papeleria.LogicaNegocio.csproj", "{953DF4C3-6BFE-421C-B9B6-3175DA7DC3B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.LogicaAplicacion", "Papeleria.LogicaAplicacion\Papeleria.LogicaAplicacion.csproj", "{8A459687-05D0-44D1-BDCE-4F410E499E99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Papeleria.LogicaAplicacion", "Papeleria.LogicaAplicacion\Papeleria.LogicaAplicacion.csproj", "{8A459687-05D0-44D1-BDCE-4F410E499E99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.AccesoDatos", "Papeleria.AccesoDatos\Papeleria.AccesoDatos.csproj", "{9D2B329D-D931-4646-AAF0-7F191E3CFEB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Papeleria.AccesoDatos", "Papeleria.AccesoDatos\Papeleria.AccesoDatos.csproj", "{9D2B329D-D931-4646-AAF0-7F191E3CFEB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Papeleria.WebApi", "Papeleria.WebApi\Papeleria.WebApi.csproj", "{F2241ECF-B4C8-4295-A178-4BAE65DAA992}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Papeleria.WebApi", "Papeleria.WebApi\Papeleria.WebApi.csproj", "{F2241ECF-B4C8-4295-A178-4BAE65DAA992}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

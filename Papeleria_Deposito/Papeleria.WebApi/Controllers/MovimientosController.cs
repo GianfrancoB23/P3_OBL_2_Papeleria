@@ -94,7 +94,8 @@ namespace Papeleria.WebApi.Controllers
             try
             {
                 _cuAltaMovimiento.Crear(mov);
-                return CreatedAtRoute("GetMovByID", new { id = mov.ID }, mov);
+                //return CreatedAtRoute("GetMovByID", new { id = mov.ID }, mov);
+                return Ok(mov);
             }
 
             catch (ArticuloNoValidoException ex)

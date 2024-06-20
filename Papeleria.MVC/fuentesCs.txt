@@ -1,0 +1,834 @@
+﻿***********************************
+Archivo: ConsultasController.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Controllers\ConsultasController.cs
+***********************************
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Papeleria.MVC.Models;
+using System.Net.Http.Headers;
+using System.Text.Json;
+
+namespace Papeleria.MVC.Controllers
+{
+    public class ConsultasController : Controller
+    {
+        private readonly HttpClient _httpClient;
+        private readonly string _url = "https://localhost:7148/api/";
+        private readonly JsonSerializerOptions _jsonOptions
+            = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        // GET: MovimientoStockController
+        public ConsultasController(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri(_url);
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        }
+
+        // GET: ConsultasController
+        public ActionResult Index()
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
+            HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
+            IEnumerable<ArticuloModel> articulos = null;
+            IEnumerable<TipoMovimientoModel> tiposMovimientos = null;
+            if (articulosRequest.IsSuccessStatusCode)
+            {
+                var body = articulosRequest.Content.ReadAsStringAsync().Result;
+                var objetos = JsonSerializer.Deserialize<IEnumerable<Models.ArticuloModel>>(body);
+                articulos = objetos;
+            }
+            if (tipoMovRequest.IsSuccessStatusCode)
+            {
+                var body = tipoMovRequest.Content.ReadAsStringAsync().Result;
+                var objetos = JsonSerializer.Deserialize<IEnumerable<Models.TipoMovimientoModel>>(body);
+                tiposMovimientos = objetos;
+            }
+            ViewBag.articulos = articulos;
+            ViewBag.tiposMovimientos = tiposMovimientos;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(int ArticuloID, string tipoMovimientoNombre, DateTime fechaIni, DateTime fechaFin)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            TempData["ResultadoBuscarMovimientos"] = "";
+            DateTime fechaNull = new DateTime(01, 01, 0001);
+            try
+            {
+                if (!string.IsNullOrEmpty(tipoMovimientoNombre) && ArticuloID != 0)
+                {
+                    HttpResponseMessage movimientossRequest = _httpClient.GetAsync($"Movimientos/{ArticuloID}/{tipoMovimientoNombre}").Result;
+                    IEnumerable<MovimientosModel> movimientos = null;
+
+                    var body = movimientossRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.MovimientosModel>>(body);
+                    movimientos = objetos;
+
+                    if (movimientos.Count() == 0)
+                    {
+                        TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia para ese movimiento.";
+                        return RedirectToAction("Index", "Consultas");
+                    }
+                    return View("Consulta1", movimientos);
+                }
+                if (fechaIni != fechaNull && fechaFin != fechaNull)
+                {
+                    HttpResponseMessage movimientossRequest = _httpClient.GetAsync($"Movimientos/articulos-por-fechas?fechaIni={fechaIni:s}&fechaFin={fechaFin:s}").Result;
+                    IEnumerable<ArticuloModel> articulos = null;
+
+                    var body = movimientossRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.ArticuloModel>>(body);
+                    articulos = objetos;
+
+                    if (articulos.Count() == 0)
+                    {
+                        TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia para ese movimiento.";
+                        return RedirectToAction("Index", "Consultas");
+                    }
+                    return View("Consulta2", articulos);
+                }
+                TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia. Verifique los parametros ingresados.";
+                return RedirectToAction("Index", "Consultas");
+            }
+            catch (Exception e)
+            {
+                TempData["ResultadoBuscarMovimientos"] = e.Message;
+                return RedirectToAction("Index", "Consultas");
+            }
+        }
+        public ActionResult Consultar()
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            HttpResponseMessage movimientosRequest = _httpClient.GetAsync($"Movimientos/resumen").Result;
+
+            IEnumerable<MovimientoConsultaModel> respuesta = null;
+
+            var body = movimientosRequest.Content.ReadAsStringAsync().Result;
+            var objetos = JsonSerializer.Deserialize<IEnumerable<MovimientoConsultaModel>>(body);
+            respuesta = objetos;
+
+            if (respuesta.Count() == 0)
+            {
+                TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia para ese movimiento.";
+                return RedirectToAction("Index", "Consultas");
+            }
+
+            foreach (var movimiento in respuesta)
+            {
+                movimiento.totalCantidadMovida = movimiento.movimientos.Sum(m => m.cantidadMovida);
+            }
+            return View("Consulta3", respuesta);
+        }
+
+        // GET: ConsultasController/Details/5
+        public ActionResult Details(int id)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            return View();
+        }
+
+        // GET: ConsultasController/Create
+        public ActionResult Create()
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            return View();
+        }
+
+        // POST: ConsultasController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(IFormCollection collection)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: ConsultasController/Edit/5
+        public ActionResult Edit(int id)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            return View();
+        }
+
+        // POST: ConsultasController/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        // GET: ConsultasController/Delete/5
+        public ActionResult Delete(int id)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            return View();
+        }
+
+        // POST: ConsultasController/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            try
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+    }
+}
+
+***********************************
+Archivo: HomeController.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Controllers\HomeController.cs
+***********************************
+using Papeleria.MVC.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+
+namespace Papeleria.MVC.Controllers
+{
+    public class HomeController : Controller
+    {
+        private HttpClient _httpClient;
+        private readonly ILogger<HomeController> _logger;
+
+        public HomeController(HttpClient httpClient, ILogger<HomeController> logger)
+        {
+            _httpClient = httpClient;
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
+}
+
+***********************************
+Archivo: LoginController.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Controllers\LoginController.cs
+***********************************
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using Papeleria.MVC.Models;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+///xxxxx
+namespace Papeleria.MVC.Controllers
+{
+    public class LoginController : Controller
+    {
+        private HttpClient _httpClient;
+        private readonly string _url = "https://localhost:7148/api/";
+        //Configuracion para deserializar el json y evitar errores por mayusculas y minusculas
+        private JsonSerializerOptions _jsonOptions
+            = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        public LoginController(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri(_url);
+        }
+
+        // GET: LoginController/Create
+        public ActionResult Autorizar()
+        {
+            return View();
+        }
+
+        // POST: LoginController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Autorizar(LoginModel loginModel)
+        {
+            try
+            {
+                //loginModel.Nombre = "";
+                //loginModel.Apellido = "";
+                var json = JsonSerializer.Serialize(loginModel);
+                var body = new StringContent(json, Encoding.UTF8, "application/json");
+                var respuesta = _httpClient.PostAsync("Usuarios/login", body).Result;
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var content = respuesta.Content.ReadAsStringAsync().Result;
+
+                    var token = JsonSerializer.Deserialize<LoginToken>(content, _jsonOptions);
+                    if (token == null)
+                    {
+                        ViewBag.Error = "No se ha podido deserializar el token";
+                        return View(loginModel);
+                    }
+                    HttpContext.Session.SetString("Token", token.Token);
+                    HttpContext.Session.SetString("Rol", token.Rol);
+                    HttpContext.Session.SetInt32("UserId", token.UserId);
+                    //HttpContext.Session.SetString("Email", token.Email);
+                    //Agregar el token a las cabeceras de las peticiones, para que el servidor lo pueda validar
+                    //No olvidar que el token debe ser enviado en todas las peticiones
+                    _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.Token}");
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    SetError(respuesta);
+                    return View(loginModel);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View(loginModel);
+            }
+        }
+
+        public ActionResult CerrarSesion()
+        {
+            if (HttpContext.Session.GetString("Token") == null)
+            {
+                return RedirectToAction("Login");
+            }
+           
+            HttpContext.Session.Remove("Token");
+            HttpContext.Session.Remove("Rol");
+           // HttpContext.Session.Remove("Email");
+            _httpClient.DefaultRequestHeaders.Remove("Authorization");
+            return RedirectToAction("Autorizar","Login");
+        }
+        private void SetError(HttpResponseMessage respuesta)
+        {
+            var contenidoError = respuesta.Content.ReadAsStringAsync().Result;
+            dynamic mensajeJson = JObject.Parse(@"{'Message':'" + contenidoError + "'}");
+            ViewBag.Error = $"Hubo un error. {respuesta.ReasonPhrase} " + mensajeJson.Message;
+        }
+    }
+}
+
+***********************************
+Archivo: MovimientoController.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Controllers\MovimientoController.cs
+***********************************
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
+using NuGet.Common;
+using Papeleria.MVC.Models;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+
+namespace Papeleria.MVC.Controllers
+{
+    public class MovimientoController : Controller
+    {
+        private readonly HttpClient _httpClient;
+        private readonly string _url = "https://localhost:7148/api/";
+        private readonly JsonSerializerOptions _jsonOptions
+            = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        // GET: MovimientoStockController
+        public MovimientoController(HttpClient httpClient, IHttpClientFactory httpClientFactory)
+        {
+            _httpClient = httpClient;
+            _httpClient.BaseAddress = new Uri(_url);
+            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+        }
+        public ActionResult Index()
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+
+            try
+            {
+                HttpResponseMessage response = _httpClient.GetAsync("Movimientos").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = response.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.MovimientosModel>>(body);
+                    return View(objetos);
+                }
+                else
+                {
+                    SetError(response);
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Autorizar", "Login");
+                    }
+                    else
+                    {
+
+                        return View();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
+        // GET: MovimientoController/Details/5
+        public ActionResult Details(int id)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            try
+            {
+                HttpResponseMessage response = _httpClient.GetAsync("Movimientos/" + id).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var body = response.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<Models.MovimientosModel>(body);
+                    return View(objetos);
+                }
+                else
+                {
+                    SetError(response);
+                    if (response.StatusCode == HttpStatusCode.Unauthorized || HttpContext.Session.GetString("Rol") == "Administrador")
+                    {
+                        return RedirectToAction("Autorizar", "Login");
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
+        // GET: MovimientoController/Create
+        public ActionResult Create()
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            try
+            {
+                HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
+                HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
+                IEnumerable<ArticuloModel> articulos = null;
+                IEnumerable<TipoMovimientoModel> tiposMovimientos = null;
+                if (articulosRequest.IsSuccessStatusCode)
+                {
+                    var body = articulosRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.ArticuloModel>>(body);
+                    articulos = objetos;
+                }
+                if (tipoMovRequest.IsSuccessStatusCode)
+                {
+                    var body = tipoMovRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.TipoMovimientoModel>>(body);
+                    tiposMovimientos = objetos;
+                }
+                else
+                {
+                    ViewBag.Error = "No se encontraron tipos de movimiento";
+                }
+                ViewBag.articulos = articulos;
+                ViewBag.tiposMovimientos = tiposMovimientos;
+                ViewBag.usuario = HttpContext.Session.GetInt32("UserId");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+
+        // POST: MovimientoController/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(MovimientosModel movimiento)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
+            try
+            {
+                HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
+                HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
+                IEnumerable<ArticuloModel> articulos = null;
+                IEnumerable<TipoMovimientoModel> tiposMovimientos = null;
+                if (articulosRequest.IsSuccessStatusCode)
+                {
+                    var body = articulosRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.ArticuloModel>>(body);
+                    articulos = objetos;
+                }
+                if (tipoMovRequest.IsSuccessStatusCode)
+                {
+                    var body = tipoMovRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.TipoMovimientoModel>>(body);
+                    tiposMovimientos = objetos;
+                }
+                ViewBag.articulos = articulos;
+                ViewBag.tiposMovimientos = tiposMovimientos;
+                var json = JsonSerializer.Serialize(movimiento);
+                var bodyJson = new StringContent(json, Encoding.UTF8, "application/json");
+                var respuesta = _httpClient.PostAsync("Movimientos", bodyJson).Result;
+
+                if (respuesta.IsSuccessStatusCode)
+                {
+                    var content = respuesta.Content.ReadAsStringAsync().Result;
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    SetError(respuesta);
+                    if (respuesta.StatusCode == HttpStatusCode.Unauthorized)
+                    {
+                        return RedirectToAction("Autorizar", "Login");
+                    }
+                    else
+                    {
+                        return View();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+        }
+        private void SetError(HttpResponseMessage respuesta)
+        {
+            var contenidoError = respuesta.Content.ReadAsStringAsync().Result;
+            dynamic mensajeJson = JObject.Parse(@"{'Message':'" + contenidoError + "'}");
+            ViewBag.Error = $"Hubo un error. {respuesta.ReasonPhrase} " + mensajeJson.Message;
+        }
+    }
+}
+
+***********************************
+Archivo: ArticuloModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\ArticuloModel.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class ArticuloModel
+    {
+
+        public int id { get; set; }
+        public long codigoProveedor { get; set; }
+        public string nombreArticulo { get; set; }
+        public string descripcion { get; set; }
+        public double precioVP { get; set; }
+    }
+}
+
+***********************************
+Archivo: ErrorViewModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\ErrorViewModel.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class ErrorViewModel
+    {
+        public string? RequestId { get; set; }
+
+        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
+    }
+}
+
+***********************************
+Archivo: LoginModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\LoginModel.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class LoginModel
+    {
+        public int Id { get; set; }
+        public int Admin { get; set; }
+        public string Email { get; set; }
+        public string Nombre { get; set; } = string.Empty;
+        public string Apellido { get; set; } = string.Empty;
+        public string Contrasenia { get; set; }
+        //public string Email { get; set; }
+        //public string Contrasenia { get; set; }
+    }
+}
+
+***********************************
+Archivo: LoginToken.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\LoginToken.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class LoginToken
+    {
+        public int UserId { get; set; } 
+        public string Email { get; set; }
+        public string Rol { get; set; }
+        public string Token { get; set; }
+    }
+}
+
+***********************************
+Archivo: MovimientoConsultaModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\MovimientoConsultaModel.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class MovimientoConsultaModel
+    {
+        public int anio { get; set; }
+        public List<TipoMovConsultaModel> movimientos { get; set; }
+        public int totalCantidadMovida { get; set; }
+    }
+}
+
+***********************************
+Archivo: MovimientosModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\MovimientosModel.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class MovimientosModel
+    {
+        public int id { get; set; }
+        public DateTime fecHorMovRealizado { get; set; } = DateTime.Now;
+        public int articuloID { get; set; }
+        public long codigoProveedor { get; set; }
+        public string nombreArticulo { get; set; } = string.Empty;
+        public string descripcion { get; set; } = string.Empty;
+        public double precioVP { get; set; }
+        public int tipoMovimientoID { get; set; }
+        public string tipoMovimientoNombre { get; set; } = string.Empty;
+        public int usuarioID { get; set; }
+        public string email { get; set; } = string.Empty;
+        public string nombre { get; set; } = string.Empty;
+        public string apellido { get; set; } = string.Empty;
+        public string contrasenia { get; set; } = string.Empty;
+        public int ctdUnidadesXMovimiento { get; set; }
+    }
+}
+
+***********************************
+Archivo: Prueba.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\Prueba.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class Prueba
+    {
+        DateTime prueba { get; set; }
+
+    }
+}
+
+***********************************
+Archivo: TipoMovConsultaModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\TipoMovConsultaModel.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class TipoMovConsultaModel
+    {
+        public string tipoMovimiento { get; set; }
+        public int cantidadMovida { get; set; }
+    }
+}
+
+***********************************
+Archivo: TipoMovimientoModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\TipoMovimientoModel.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class TipoMovimientoModel
+    {
+        public int id { get; set; }
+        public string nombre { get; set; }
+
+    }
+}
+
+***********************************
+Archivo: UsuarioModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\UsuarioModel.cs
+***********************************
+namespace Papeleria.MVC.Models
+{
+    public class UsuarioModel
+    {
+        public int Id { get; set; }
+        public int Admin { get; set; }
+        public string Email { get; set; }
+        public string Nombre { get; set; } = string.Empty;
+        public string Apellido { get; set; } = string.Empty;
+        public string Contrasenia { get; set; }
+    }
+}
+
+***********************************
+Archivo: LineaPedidoModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\PedidosModels\LineaPedidoModel.cs
+***********************************
+using System.ComponentModel.DataAnnotations;
+
+namespace Papeleria.MVC.Models.PedidosModels
+{
+    public class LineaPedidoModel
+    {
+        [Required(ErrorMessage = "El artículo es obligatorio")]
+        public int ArticuloId { get; set; }
+
+        [Required(ErrorMessage = "La cantidad es obligatoria")]
+        [Range(1, int.MaxValue, ErrorMessage = "La cantidad debe ser mayor que cero")]
+        public int Cantidad { get; set; }
+    }
+}
+
+***********************************
+Archivo: PedidoAltaModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\PedidosModels\PedidoAltaModel.cs
+***********************************
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+
+namespace Papeleria.MVC.Models.PedidosModels
+{
+    public class PedidoAltaModel
+    {
+        [Required(ErrorMessage = "El cliente es obligatorio")]
+        public int ClienteId { get; set; }
+
+        public List<LineaPedidoModel> LineasPedido { get; set; }
+
+        [Required(ErrorMessage = "La fecha de entrega es obligatoria")]
+        [DataType(DataType.Date)]
+        public DateTime FechaEntrega { get; set; }
+        public int ArticuloId { get; set; }
+        public int Cantidad { get; set; }
+        public double iva { get; set; }
+        public double PrecioUnitario { get; set; }
+        public double Subtotal { get; set; }
+    }
+}
+
+***********************************
+Archivo: PedidoListModel.cs
+Carpeta: C:\Users\moreno\Documents\GitHub\P3_OBL_2_Papeleria\Papeleria.MVC\Models\PedidosModels\PedidoListModel.cs
+***********************************
+using System.ComponentModel.DataAnnotations;
+
+namespace Papeleria.MVC.Models.PedidosModels
+{
+    public class PedidoListModel
+    {
+        public int Id { get; set; }
+        [Required(ErrorMessage = "El cliente es obligatorio")]
+        public int ClienteId { get; set; }
+
+        public List<LineaPedidoModel> LineasPedido { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime FechaPedido { get; set; }
+
+        [Required(ErrorMessage = "La fecha de entrega es obligatoria")]
+        [DataType(DataType.Date)]
+        public DateTime FechaEntrega { get; set; }
+        public double IVA { get; set; }
+        public double PrecioFinal {  get; set; }
+
+    }
+}
