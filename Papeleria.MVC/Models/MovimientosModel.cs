@@ -2,20 +2,20 @@
 {
     public class MovimientosModel
     {
-        public int Id { get; set; }
-        public string FecHorMovRealizado { get; set; } = string.Empty;
-        public int ArticuloID { get; set; }
-        public string codigoProveedor { get; set; } = string.Empty;
-        public string NombreArticulo { get; set; } = string.Empty;
-        public string Descripcion { get; set; } = string.Empty;
-        public double PrecioVP { get; set; }
-        public int TipoMovimientoID { get; set; }
-        public string TipoMovimientoNombre { get; set; } = string.Empty;
-        public int UsuarioID { get; set; }
-        public string Email { get; set; } = string.Empty;
-        public string Nombre { get; set; } = string.Empty;
-        public string Apellido { get; set; } = string.Empty;
-        public string Contrasenia { get; set; } = string.Empty;
-        public int CtdUnidadesXMovimiento { get; set; }
+        public int id { get; set; }
+        public DateTime fecHorMovRealizado { get; set; } = DateTime.Now;
+        public int articuloID { get; set; }
+        public long codigoProveedor { get; set; }
+        public string nombreArticulo { get; set; } = string.Empty;
+        public string descripcion { get; set; } = string.Empty;
+        public double precioVP { get; set; }
+        public int tipoMovimientoID { get; set; }
+        public string tipoMovimientoNombre { get; set; } = string.Empty;
+        public int usuarioID { get; set; }
+        public string email { get; set; } = string.Empty;
+        public string nombre { get; set; } = string.Empty;
+        public string apellido { get; set; } = string.Empty;
+        public string contrasenia { get; set; } = string.Empty;
+        public int ctdUnidadesXMovimiento { get; set; }
     }
 }
