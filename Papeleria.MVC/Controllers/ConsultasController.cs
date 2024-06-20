@@ -44,6 +44,44 @@ namespace Papeleria.MVC.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(int ArticuloID, string tipoMovimientoNombre)
+        {
+            TempData["ResultadoBuscarMovimientos"] = "";
+            try
+            {
+                if (!string.IsNullOrEmpty(tipoMovimientoNombre) && ArticuloID != null)
+                {
+                    HttpResponseMessage movimientossRequest = _httpClient.GetAsync($"Movimientos/{ArticuloID}/{tipoMovimientoNombre}").Result;
+                    IEnumerable<MovimientosModel> movimientos = null;
+
+                    var body = movimientossRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.MovimientosModel>>(body);
+                    movimientos = objetos;
+
+                    if (movimientos.Count() == 0)
+                    {
+                        TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia para ese movimiento.";
+                        return RedirectToAction("Index", "Consultas");
+                    }
+                    return View("Consulta1", movimientos);
+                }
+                //else
+                //{
+                //    TempData["ResultadoBuscarMovimientos"] = "Parametros invalidos.";
+                //    return RedirectToAction("Index", "Consultas");
+                //}
+                TempData["ResultadoBuscarMovimientos"] = "No se ha encontrado ninguna coincidencia. Verifique los parametros ingresados.";
+                return RedirectToAction("Index", "Consultas");
+            }
+            catch (Exception e)
+            {
+                TempData["ResultadoBuscarMovimientos"] = e.Message;
+                return RedirectToAction("Index", "Consultas");
+            }
+        }
+
         // GET: ConsultasController/Details/5
         public ActionResult Details(int id)
         {

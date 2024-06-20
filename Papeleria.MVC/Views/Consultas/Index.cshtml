@@ -3,13 +3,20 @@
 <p>
     @ViewBag.Error
 </p>
+<partial name="_Mensajes" />
+<p>
+    @if (@TempData["ResultadoBuscarMovimientos"] != null)
+    {
+        @TempData["ResultadoBuscarMovimientos"].ToString()
+    }
+</p>
 <hr />
 <div class="row">
     <div class="col-md-12">
         <h4>
             <strong>A)</strong> DADOS UN ID DE ARTÍCULO Y UN TIPO DE MOVIMIENTO, MOSTRAR TODOS LOS MOVIMIENTOS DE ESE TIPO REALIZADOS SOBRE ESE ARTÍCULO.
         </h4>
-        <form asp-action="Create">
+        <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="articuloID">Articulo</label>
@@ -19,11 +26,11 @@
                 <span asp-validation-for="articuloID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="tipoMovimientoID">Tipo Movimiento</label>
-                <select asp-for="@Model.tipoMovimientoID" asp-items="@(new SelectList(ViewBag.tiposMovimientos, "id", "nombre"))" class="form-control">
+                <label asp-for="tipoMovimientoNombre">Tipo Movimiento</label>
+                <select asp-for="@Model.tipoMovimientoNombre" asp-items="@(new SelectList(ViewBag.tiposMovimientos, "nombre", "nombre"))" class="form-control">
                     <option disabled selected>-- SELECCIONE --</option>
                 </select>
-                <span asp-validation-for="tipoMovimientoID" class="text-danger"></span>
+                <span asp-validation-for="tipoMovimientoNombre" class="text-danger"></span>
             </div>
             <br />
             <div class="form-group">

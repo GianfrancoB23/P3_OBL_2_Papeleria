@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Papeleria.MVC.Models.MovimientosModel>
+
+@{
+    ViewData["Title"] = "Consulta1";
+}
+<p>
+    @ViewBag.Error
+</p>
+<h1>Consulta A</h1>
+
+<p>
+    Dados un id de artículo y un tipo de movimiento, todos los movimientos de ese tipo
+    realizados sobre ese artículo. Deberán estar ordenados descendentemente por fecha y en
+    forma ascendente por la cantidad de unidades involucradas en el movimiento Se deberá
+    mostrar todos los datos del movimiento, incluyendo todos los datos de su tipo.
+</p>
+<table class="table text-center">
+    <thead>
+        <tr>
+            <th>
+                ID
+            </th>
+            <th>
+                Fecha y Hora
+            </th>
+            <th>
+                Articulo ID
+            </th>
+            <th>
+                Codigo Proveedor
+            </th>
+            <th>
+                Nombre Articulo
+            </th>
+            <th>
+                Descripcion
+            </th>
+            <th>
+                $
+            </th>
+            <th>
+                Tipo Movimiento
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Nombre y Apellido
+            </th>
+            <th>
+                Cantidad Unidades Movidas
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fecHorMovRealizado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.articuloID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.codigoProveedor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreArticulo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precioVP)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tipoMovimientoNombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+                @Html.DisplayFor(modelItem => item.apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ctdUnidadesXMovimiento)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
