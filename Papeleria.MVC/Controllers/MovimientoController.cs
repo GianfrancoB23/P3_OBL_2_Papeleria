@@ -109,6 +109,24 @@ namespace Papeleria.MVC.Controllers
         {
             try
             {
+                HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
+                HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
+                IEnumerable<ArticuloModel> articulos = null;
+                IEnumerable<TipoMovimientoModel> tiposMovimientos = null;
+                if (articulosRequest.IsSuccessStatusCode)
+                {
+                    var body = articulosRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.ArticuloModel>>(body);
+                    articulos = objetos;
+                }
+                if (tipoMovRequest.IsSuccessStatusCode)
+                {
+                    var body = tipoMovRequest.Content.ReadAsStringAsync().Result;
+                    var objetos = JsonSerializer.Deserialize<IEnumerable<Models.TipoMovimientoModel>>(body);
+                    tiposMovimientos = objetos;
+                }
+                ViewBag.articulos = articulos;
+                ViewBag.tiposMovimientos = tiposMovimientos;
                 return RedirectToAction(nameof(Index));
             }
             catch

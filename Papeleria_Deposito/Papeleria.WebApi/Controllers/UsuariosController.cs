@@ -68,7 +68,7 @@ namespace Papeleria.WebApi.Controllers
             try
             {
                 _altaUsuario.Ejecutar(usr);
-                return CreatedAtRoute("GetById", new { id = usr.Id }, usr);
+                return CreatedAtRoute("GetUsrByID", new { id = usr.Id }, usr);
             }
 
             catch (ArticuloNoValidoException ex)
@@ -80,8 +80,8 @@ namespace Papeleria.WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-        [HttpGet("{id}", Name = "GetByID")]
-        public ActionResult<ArticuloDTO> Get(int id)
+        [HttpGet("{id}", Name = "GetUsrByID")]
+        public ActionResult<UsuarioDTO> Get(int id)
         {
             try
             {

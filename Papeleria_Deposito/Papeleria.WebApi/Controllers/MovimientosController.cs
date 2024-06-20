@@ -69,7 +69,7 @@ namespace Papeleria.WebApi.Controllers
         }
 
         // GET api/<Movimientos>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetMovByID")]
         public ActionResult<MovimientoStockDTO> Get(int id)
         {
             try
@@ -94,7 +94,7 @@ namespace Papeleria.WebApi.Controllers
             try
             {
                 _cuAltaMovimiento.Crear(mov);
-                return CreatedAtRoute("Get", new { id = mov.ID }, mov);
+                return CreatedAtRoute("GetMovByID", new { id = mov.ID }, mov);
             }
 
             catch (ArticuloNoValidoException ex)

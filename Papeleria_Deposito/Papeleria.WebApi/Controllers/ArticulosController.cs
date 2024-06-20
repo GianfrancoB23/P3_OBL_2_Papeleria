@@ -65,7 +65,7 @@ namespace Papeleria.WebApi.Controllers
         /// </summary>
         /// <param name="id">Número entero con el valor Id del articulo a buscar</param>
         /// <returns>Articulo correspondiente al ID - Code 200 | Error 400 (Bad Request) si parametro/articulo es invalido |  500 - Error con la DB / Excepcion particular</returns>
-        [HttpGet("{id}", Name = "GetAutorByID")]
+        [HttpGet("{id}", Name = "GetArticuloByID")]
         public ActionResult<ArticuloDTO> Get(int id)
         {
             try
@@ -94,7 +94,7 @@ namespace Papeleria.WebApi.Controllers
             try
             {
                 _cuAltaArticulo.Ejecutar(articulo);
-                return CreatedAtRoute("GetAutorByID", new { id = articulo.Id }, articulo);
+                return CreatedAtRoute("GetArticuloByID", new { id = articulo.Id }, articulo);
             }
 
             catch (ArticuloNoValidoException ex)
