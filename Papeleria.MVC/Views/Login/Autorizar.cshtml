@@ -1,0 +1,29 @@
+﻿@model Colegio.PruebaApiHttpClient.Models.LoginModel
+<partial name="_Mensajes" />
+<h4>LoginModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Autorizar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+               
+            </div>
+            <div class="form-group">
+                <label asp-for="Pwd" class="control-label"></label>
+                <input asp-for="Pwd" class="form-control" />
+                
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

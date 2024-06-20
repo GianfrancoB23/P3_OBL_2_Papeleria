@@ -31,7 +31,7 @@ namespace Papeleria.MVC
             app.UseSession();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Login}/{action=Autorizar}/{id?}");
 
             app.Run();
         }
