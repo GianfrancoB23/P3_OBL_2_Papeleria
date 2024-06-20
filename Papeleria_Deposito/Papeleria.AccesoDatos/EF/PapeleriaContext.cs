@@ -31,6 +31,7 @@ namespace Papeleria.AccesoDatos.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Usuario>().HasDiscriminator<string>("Tipo").HasValue<Administrador>("Administrador").HasValue<EncargadoDeposito>("EncargadoDeposito");
             base.OnModelCreating(modelBuilder); 
         }
     }
