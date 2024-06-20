@@ -19,22 +19,19 @@
             <div class="form-group">
                 <label asp-for="articuloID">Articulo</label>
                 <select asp-for="@Model.articuloID" asp-items="@(new SelectList(ViewBag.articulos, "id", "nombreArticulo"))" class="form-control">
-                    <option disabled selected>Seleccionar articulo</option>
+                    <option disabled selected>Seleccionar articulo...</option>
                 </select>
                 <span asp-validation-for="articuloID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="tipoMovimientoID" class="control-label"></label>
-                <input asp-for="tipoMovimientoID" class="form-control" />
-                <span asp-validation-for="tipoMovimientoID" class="text-danger"></span>
+                <label asp-for="tipoMovimientoID">Tipo de movimiento</label>
+                <select asp-for="@Model.tipoMovimientoID" asp-items="@(new SelectList(ViewBag.tiposMovimientos, "id", "nombre"))" class="form-control">
+                    <option disabled selected>Seleccionar tipo de movimiento...</option>
+                </select>
+                <span asp-validation-for="articuloID" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="usuarioID" class="control-label"></label>
-                <input asp-for="usuarioID" class="form-control" />
-                <span asp-validation-for="usuarioID" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ctdUnidadesXMovimiento" class="control-label"></label>
+                <label asp-for="ctdUnidadesXMovimiento" class="control-label">Cantidad de unidades</label>
                 <input asp-for="ctdUnidadesXMovimiento" class="form-control" />
                 <span asp-validation-for="ctdUnidadesXMovimiento" class="text-danger"></span>
             </div>
