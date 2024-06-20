@@ -25,6 +25,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Index()
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             HttpResponseMessage articulosRequest = _httpClient.GetAsync("Articulos").Result;
             HttpResponseMessage tipoMovRequest = _httpClient.GetAsync("TipoMovimientos").Result;
             IEnumerable<ArticuloModel> articulos = null;
@@ -51,6 +55,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Index(int ArticuloID, string tipoMovimientoNombre, DateTime fechaIni, DateTime fechaFin)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             TempData["ResultadoBuscarMovimientos"] = "";
             DateTime fechaNull = new DateTime(01, 01, 0001);
             try
@@ -101,6 +109,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Details(int id)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             return View();
         }
 
@@ -108,6 +120,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Create()
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             return View();
         }
 
@@ -117,6 +133,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Create(IFormCollection collection)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -131,6 +151,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Edit(int id)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             return View();
         }
 
@@ -140,6 +164,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Edit(int id, IFormCollection collection)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -154,6 +182,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Delete(int id)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             return View();
         }
 
@@ -163,6 +195,10 @@ namespace Papeleria.MVC.Controllers
         public ActionResult Delete(int id, IFormCollection collection)
         {
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", HttpContext.Session.GetString("Token"));
+            if (_httpClient.DefaultRequestHeaders.Authorization.Parameter == null || HttpContext.Session.GetString("Rol") == "Administrador")
+            {
+                return RedirectToAction("Autorizar", "Login");
+            }
             try
             {
                 return RedirectToAction(nameof(Index));

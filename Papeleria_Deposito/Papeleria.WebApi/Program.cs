@@ -69,9 +69,9 @@ namespace Papeleria.WebApi
             builder.Services.AddScoped<IUpdateTipoMovimiento, ModificarTipoMovimiento>();
 
             builder.Services.AddScoped<IAltaMovimiento, AltaMovimiento>();
-            builder.Services.AddScoped<IBorrarMovimiento, BorrarMovimiento>();
+            //builder.Services.AddScoped<IBorrarMovimiento, BorrarMovimiento>();
             builder.Services.AddScoped<IGetMovimiento, BuscarMovimiento>();
-            builder.Services.AddScoped<IUpdateMovimiento, UpdateMovimiento>();
+            //builder.Services.AddScoped<IUpdateMovimiento, UpdateMovimiento>();
             builder.Services.AddScoped<IFiltrarMovimiento, FiltrarMovimiento>();
 
 

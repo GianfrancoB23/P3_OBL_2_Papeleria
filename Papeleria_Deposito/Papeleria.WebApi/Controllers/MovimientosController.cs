@@ -30,11 +30,9 @@ namespace Papeleria.WebApi.Controllers
         private IUpdateArticulo _cuModificarArticulo;
         private IGetMovimiento _cuGetMovimiento;
         private IAltaMovimiento _cuAltaMovimiento;
-        private IBorrarMovimiento _cuBorrarMovimiento;
-        private IUpdateMovimiento _cuUpdateMovimiento;
 
         public MovimientosController(IRepositorioArticulo repoArt,IRepositorioUsuario repoUsr, IRepositorioMovimientoStock repo, IAltaArticulo cuAltaArticulo, IGetAllArticulos cuGetArticulos,
-            IGetArticulo cuGetArticulo, IBorrarArticulo cuBorrarArticulo, IUpdateArticulo cuModificarArticulo, IAltaMovimiento altaMovimiento, IBorrarMovimiento borrarMovimiento, IUpdateMovimiento updateMovimiento, IGetMovimiento getMovimiento)
+            IGetArticulo cuGetArticulo, IBorrarArticulo cuBorrarArticulo, IUpdateArticulo cuModificarArticulo, IAltaMovimiento altaMovimiento, IGetMovimiento getMovimiento)
         {
             _repoArt = repoArt;
             _repoUsr = repoUsr;
@@ -45,8 +43,6 @@ namespace Papeleria.WebApi.Controllers
             _cuBorrarArticulo = cuBorrarArticulo;
             _cuModificarArticulo = cuModificarArticulo; 
             _cuAltaMovimiento = altaMovimiento;
-            _cuBorrarMovimiento = borrarMovimiento;
-            _cuUpdateMovimiento = updateMovimiento;
             _cuGetMovimiento = getMovimiento;
         }
         // GET: api/<Movimientos>
