@@ -1,4 +1,5 @@
-﻿using Papeleria.LogicaNegocio.Entidades;
+﻿using Empresa.LogicaDeNegocio.Entidades;
+using Papeleria.LogicaNegocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,6 @@ namespace Papeleria.LogicaNegocio.InterfacesRepositorio
         public bool EstaEnUsoTipoMovimientoByNombre(string nombre);
         public int CtdMovimientos();
         public IEnumerable<MovimientoStock> GetAllByIDArticulo_y_TipoMovimiento(int idArticulo, string tipoMovimiento);
-        //public IEnumerable<MovimientoStock> GetByRangoFechas(DateTime fecha1, DateTime fecha2);
+        public IEnumerable<Articulo> GetByRangoFechas(DateTime fecha1, DateTime fecha2);
     }
 }

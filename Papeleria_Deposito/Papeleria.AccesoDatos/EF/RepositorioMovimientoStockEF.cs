@@ -125,6 +125,28 @@ namespace Papeleria.AccesoDatos.EF
 
         }
 
+        public IEnumerable<Articulo> GetByRangoFechas(DateTime fechaIni, DateTime fechaFin)
+        {
+            if (fechaIni == null)
+                throw new MovimientoStockNoValidoException("La fecha de inicio no puede ser nula.");
+            if (fechaFin == null)
+                throw new MovimientoStockNoValidoException("La fecha final no puede ser nula.");
+            if (fechaIni > fechaFin)
+                throw new MovimientoStockNoValidoException("La fecha inicial no puede ser mayor a la fecha final.");
+            try
+            {
+                var articulos = _db.MovimientoStocks
+                           .Where(mov => mov.FecHorMovRealizado >= fechaIni && mov.FecHorMovRealizado <= fechaFin)
+                           .Select(mov => mov.Articulo)
+                           .ToList();
+                return articulos;
+            }
+            catch (Exception ex)
+            {
+                throw new MovimientoStockNoValidoException(ex.Message);
+            }
+        }
+
         public IEnumerable<MovimientoStock> GetObjectsByID(List<int> ids)
         {
             throw new NotImplementedException();

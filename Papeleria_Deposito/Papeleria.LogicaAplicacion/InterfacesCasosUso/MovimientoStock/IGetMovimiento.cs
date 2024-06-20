@@ -1,4 +1,5 @@
-﻿using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.MovimientoStock;
+﻿using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Articulos;
+using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.MovimientoStock;
 using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 using System;
@@ -15,5 +16,6 @@ namespace Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos
         public MovimientoStockDTO GetByDTO(int id);
         public IEnumerable<MovimientoStockDTO> GetAll();
         public IEnumerable<MovimientoStockDTO> GetMovimientosByIDArticuloYTipoMov(int idArticulo, string tipoMovimiento);
+        public IEnumerable<ArticuloDTO> GetArticulosByRangoFecha(DateTime fechaIni, DateTime fechaFin);
     }
 }
