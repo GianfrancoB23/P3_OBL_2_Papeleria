@@ -1,4 +1,6 @@
-﻿using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.MovimientoStock;
+﻿using Empresa.LogicaDeNegocio.Entidades;
+using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.Articulos;
+using Papeleria.LogicaAplicacion.DataTransferObjects.Dtos.MovimientoStock;
 using Papeleria.LogicaAplicacion.DataTransferObjects.MapeosDatos;
 using Papeleria.LogicaAplicacion.InterfacesCasoDeUsoGeneral;
 using Papeleria.LogicaAplicacion.InterfacesCasosUso.Movimientos;
@@ -38,9 +40,20 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
             var movimientos = _repoMov.GetAll();
             if (movimientos == null || movimientos.Count() == 0)
             {
-                throw new Exception("No hay autores registrados");
+                throw new MovimientoStockNuloException("No hay movimientos registrados");
             }
             return MovimientoStockMappers.FromLista(movimientos);
+        }
+
+        public IEnumerable<ArticuloDTO> GetArticulosByRangoFecha(DateTime fechaIni, DateTime fechaFin)
+        {
+            IEnumerable<Articulo> articulos = _repoMov.GetByRangoFechas(fechaIni,fechaFin);
+            if (articulos.Count()==0)
+            {
+                throw new ArticuloNuloException("No se ha encontrado articulos que hayan tenido movimiento en ese rango de fechas."); // Handler de exception
+            }
+            var ret = ArticulosMappers.FromLista(articulos);
+            return ret;
         }
 
         public MovimientoStockDTO GetByDTO(int id)
@@ -48,7 +61,7 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
             var movimiento = _repoMov.GetById(id);
             if (movimiento == null)
             {
-                throw new Exception("Articulo no encontrado con el ID especificado"); // Handler de exception
+                throw new MovimientoStockNuloException("Movimiento no encontrado con el ID especificado"); // Handler de exception
             }
             var ret = MovimientoStockMappers.ToDto(movimiento);
             return ret;

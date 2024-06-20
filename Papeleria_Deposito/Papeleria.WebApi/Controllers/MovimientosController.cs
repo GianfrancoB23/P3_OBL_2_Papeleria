@@ -171,5 +171,32 @@ namespace Papeleria.WebApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        // GET api/<Movimientos>/articulos-por-fechas
+        [HttpGet("articulos-por-fechas")]
+        public ActionResult<ArticuloDTO> GetArticuloByRangoFechas(DateTime fechaIni, DateTime fechaFin)
+        {
+            if (fechaIni == null)
+                return BadRequest("Debe indicar la fecha de inicio para buscar en MovimientoStock.");
+            if (fechaFin == null)
+                return BadRequest("Debe indicar la fecha de fin para buscar en MovimientoStock.");
+            if (fechaIni > fechaFin)
+                return BadRequest("La fecha de inicio no puede ser mayor que la fecha de fin.");
+            try
+            {
+                var articulosDTO = _cuGetMovimiento.GetArticulosByRangoFecha(fechaIni,fechaFin);
+                if (articulosDTO.Count() == 0)
+                    return NotFound("No se articulo en ese periodo de fechas.");
+                return Ok(articulosDTO);
+            }
+            catch (ArticuloNoValidoException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
