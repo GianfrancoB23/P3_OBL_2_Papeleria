@@ -12,6 +12,7 @@ using Papeleria.LogicaNegocio.Entidades;
 using Papeleria.LogicaNegocio.Excepciones.Articulo;
 using Papeleria.LogicaNegocio.InterfacesRepositorio;
 using SistemaDocentes.Api.UtilidadesJwt;
+using System.Net.Http.Headers;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,7 +30,7 @@ namespace Papeleria.WebApi.Controllers
         private IGetAllUsuarios _getAllUsuarios;
         private IGetUsuario _getUsuario;
         private IModificarUsuario _modificarUsuario;
-        public UsuariosController(ILogin login, PapeleriaContext context,IRepositorioUsuario repo, IAltaUsuario altaUsuario, IBorrarUsuario borrarUsuario, IGetAllUsuarios getAllUsuarios, IGetUsuario getUsuario, IModificarUsuario modificarUsuario)
+        public UsuariosController(ILogin login, PapeleriaContext context, IRepositorioUsuario repo, IAltaUsuario altaUsuario, IBorrarUsuario borrarUsuario, IGetAllUsuarios getAllUsuarios, IGetUsuario getUsuario, IModificarUsuario modificarUsuario)
         {
             _login = login;
             _context = context;
@@ -43,7 +44,7 @@ namespace Papeleria.WebApi.Controllers
 
 
         // GET: api/<UsuarioController>
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public ActionResult<IEnumerable<UsuarioDTO>> Get()
         {

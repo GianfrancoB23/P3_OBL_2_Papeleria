@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Options;
+
 namespace Papeleria.MVC
 {
     public class Program
@@ -12,7 +14,9 @@ namespace Papeleria.MVC
             builder.Services.AddControllersWithViews();
             // Add HttpClient
             builder.Services.AddHttpClient();
-            builder.Services.AddSession();
+            builder.Services.AddSession(opt => {
+                opt.Cookie.IsEssential = true;
+            });
 
             var app = builder.Build();
 

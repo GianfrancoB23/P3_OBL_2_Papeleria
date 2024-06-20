@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Papeleria.MVC.Models;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 ///xxxxx
@@ -9,10 +10,10 @@ namespace Papeleria.MVC.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly HttpClient _httpClient;
+        private HttpClient _httpClient;
         private readonly string _url = "https://localhost:7148/api/";
         //Configuracion para deserializar el json y evitar errores por mayusculas y minusculas
-        private readonly JsonSerializerOptions _jsonOptions
+        private JsonSerializerOptions _jsonOptions
             = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         public LoginController(HttpClient httpClient)
         {
@@ -55,6 +56,7 @@ namespace Papeleria.MVC.Controllers
                     //Agregar el token a las cabeceras de las peticiones, para que el servidor lo pueda validar
                     //No olvidar que el token debe ser enviado en todas las peticiones
                     _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {token.Token}");
+                    _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
                     return RedirectToAction("Index", "Home");
                 }
                 else

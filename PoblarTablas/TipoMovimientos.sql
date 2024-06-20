@@ -4,7 +4,7 @@ VALUES
 (1, 'Venta'),
 (2, 'Devolucion'),
 (3, 'Entrada'),
-(4, 'Roptura'),
+(4, 'Ruptura'),
 (5, 'Reacondicionamiento'),
 (6, 'Service'),
 (7, 'Otro');
