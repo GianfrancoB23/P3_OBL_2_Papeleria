@@ -13,12 +13,12 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
     public class BorrarMovimiento : IBorrarMovimiento
     {
         private static IRepositorioMovimientoStock _repo;
-        public BorrarMovimiento(IRepositorioMovimientoStock repo) { _repo = _repo; }
+        public BorrarMovimiento(IRepositorioMovimientoStock repo) { _repo = repo; }
 
         public void Remove(int id)
         {
             var movimiento = _repo.GetById(id);
-            if (movimiento != null)
+            if (movimiento == null)
             {
                 throw new Exception("Movimiento no puede ser nulo");
             }
