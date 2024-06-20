@@ -2,7 +2,7 @@ using Papeleria.MVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Colegio.PruebaApiHttpClient.Controllers
+namespace Papeleria.MVC.Controllers
 {
     public class HomeController : Controller
     {

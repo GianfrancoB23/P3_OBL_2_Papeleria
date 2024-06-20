@@ -1,7 +1,4 @@
-﻿using Empresa.LogicaDeNegocio.Entidades;
-using Papeleria.LogicaNegocio.Entidades.ValueObjects.Pedidos;
-using Papeleria.LogicaNegocio.Entidades;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace Papeleria.MVC.Models.PedidosModels
