@@ -19,9 +19,13 @@ namespace Papeleria.LogicaAplicacion.ImplementacionCasosUso.Movimiento
 
         private IRepositorioMovimientoStock _repoMov;
         private IRepositorioArticulo _repoArt;
-        public BuscarMovimiento(IRepositorioMovimientoStock repo, IRepositorioArticulo repoArt)
+        private IRepositorioUsuario _repoUsuario;
+        private IRepositorioTipoMovimiento _repoTipoMovimiento;
+        public BuscarMovimiento(IRepositorioMovimientoStock repo, IRepositorioArticulo repoArt, IRepositorioUsuario repoUsuario, IRepositorioTipoMovimiento repoTipoMovimiento)
         {
             _repoMov = repo; _repoArt = repoArt;
+            _repoUsuario = repoUsuario;
+            _repoTipoMovimiento = repoTipoMovimiento;
         }
         public MovimientoStock Get(int id)
         {
